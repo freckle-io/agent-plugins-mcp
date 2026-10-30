@@ -1,0 +1,23 @@
+# Build, run and change workflows
+
+## Build
+- Load input rows into a Workbook Dataset (a file through `datasets_createCsvUploadUrl` with a unique `keyColumn`); existing rows connect as they are.
+- Write the whole draft from the plan (`workflowDrafts_getDraftSyntax`), taking every node's details from one `workflowNodes_getWorkflowNodes` call. When you can write files, keep it in a local `.yaml` file started from `workflowDrafts_initDraft`; otherwise write it as one JSON object.
+- Publish, connect and sample by uploading the file to `workflows_createDraftUploadUrl` (same arguments as `workflows_buildWorkflow`), or with `workflows_buildWorkflow` for an inline draft. Fix what it reports in the file and upload again; after a save, use the returned `nextUpload`. Connections are manual; automatic triggering is only for webhook feeds, scheduled CRM imports, or a rerun schedule.
+- Outputs: one typed result per row, each planned column a visible field in the output Dataset's catalog. Leave out raw provider JSON and pass-through inputs. A stage feeding another workflow outputs the identifiers that stage needs.
+- A missing input for one part (such as the pitch for message drafts) does not hold up the rest: connect and sample the parts that are ready, and ask for it with the results.
+- Stages: for one row per person, push found people to a Dataset and connect the per-person workflow there; for one row per account, keep person slots in one workflow. Reuse saved node blocks as exported.
+
+## Run
+- Only when authorized and within the balance; if refused for credits or a member limit, report it and stop.
+- A sample is the first rows in list order, 10 unless the user names a number: `sampleRows`, or the first matching rows by id (`datasets_runWorkflowDatasetConnectionEntries`) when the ask selects rows by a value such as a tier. Wait with `workflowRuns_wait`, not sleeps: pass the `runIds` you got, or `connectionId` with `since` set to the `startedAt` the run-starting call returned, so earlier runs do not count.
+- To rerun rows on a schedule, make the connection automatic (that runs any pending rows), then `datasets_updateWorkflowDatasetConnectionRerunPolicy`. It starts after each row's next successful run; failed rows never rerun on their own (say so when explaining a missed rerun, and offer `datasets_rerunFailedWorkflowDatasetConnection`). A question about its cost or why it did not run changes nothing: answer it, and offer a run only when the user asks to start or change the schedule. A cron is read in the Workspace zone (`workspace_context` `timeZone`; null is UTC): convert the user's time to it, or set their zone with `workspace_updateWorkspaceTimeZone`.
+- When you set, change, pause or explain a rerun policy, call it a Scheduled Workflow in your reply (the app's name: "I set up a Scheduled Workflow that…"). Ask before any run that starts one (rerunning rows, or making a manual connection automatic, which runs its pending rows). A weekday or clock time is a cron (ask the time if none was given); "weekly" or "keep it fresh" is an interval. The stop output is per row (a boolean output, e.g. email found); there is no stop after N rows and nothing more often than daily, so say so and offer the nearest. "Make it automatic" is the automatic trigger; ask whether rows should also rerun on a schedule. Pause = clear the policy (null), not manual; set it again to resume or edit. "When the first finishes run the second" is chaining: connect the second workflow to the first one's output Dataset and make that connection automatic. Tell the user the zone a cron fires in.
+- Show what the sample found and which providers each row went through; flag a column empty on many rows and suggest a waterfall. Then run the rest as approved, and switch to automatic only after the rest has run and another yes.
+- A failed sample: fix `invalid_config` or `invalid_input` in a draft you wrote and resample once; `connection` means the user reconnects; for `provider_unavailable` or `internal`, report the step and stop.
+
+## Change a saved workflow
+- Read its latest revision. Keep every node, binding, gate, output and row the request does not change exactly as exported.
+- New data gets its own new output; new fallbacks and gates follow the [waterfall rules](../freckle-plan/SKILL.md#waterfalls).
+- Publish with `workflows_createDraftUploadUrl` or `workflows_buildWorkflow` (`workflowId`, `expectedRevisionId`), producer before consumer. If its inputs change, tell the user which connections will reject. Change Dataset catalogs only when authorized.
+- Fill rows a workflow left empty by rerunning only those rows (`datasets_runWorkflowDatasetConnectionEntries`), so results land in the same table.

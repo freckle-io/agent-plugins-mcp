@@ -1,0 +1,15 @@
+{
+  "name": "freckle-mcp-plugins",
+  "interface": {
+    "displayName": "Freckle MCP"
+  },
+  "plugins": [
+    {
+      "name": "freckle-mcp",
+      "source": {
+        "source": "local",
+        "path": "./freckle-mcp"
+      }
+    }
+  ]
+}

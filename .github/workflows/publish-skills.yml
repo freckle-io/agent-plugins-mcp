@@ -1,0 +1,56 @@
+name: Publish skills
+
+# Zips the skills under freckle-mcp/skills/ and attaches them to the
+# `skills-latest` release, so they download from stable URLs:
+#   https://github.com/freckle-io/agent-plugins-mcp/releases/download/skills-latest/<name>.zip
+# One zip per skill (for claude.ai / Claude Desktop uploads) plus
+# freckle-mcp-skills.zip with all of them (for ~/.claude/skills, ~/.codex/skills).
+
+on:
+  push:
+    branches: [main]
+    paths: ['freckle-mcp/skills/**', '.github/workflows/publish-skills.yml']
+  workflow_dispatch:
+
+concurrency:
+  group: publish-skills
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: skills-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build zips
+        run: |
+          set -euo pipefail
+          mkdir dist
+          cd freckle-mcp/skills
+          for skill in */; do
+            skill=${skill%/}
+            zip -qr "../../dist/$skill.zip" "$skill"
+          done
+          zip -qr ../../dist/freckle-mcp-skills.zip .
+          cd ../../dist
+          sha256sum *.zip > SHA256SUMS
+          ls -l
+
+      - name: Move tag to this commit
+        run: |
+          git tag -f "$TAG"
+          git push -f origin "refs/tags/$TAG"
+
+      - name: Upload to release
+        run: |
+          set -euo pipefail
+          gh release view "$TAG" > /dev/null 2>&1 ||
+            gh release create "$TAG" --title "Freckle MCP skills" --latest \
+              --notes "Latest Freckle MCP skills, rebuilt on every change to freckle-mcp/skills/ on main. See the README for how to install them."
+          gh release upload "$TAG" dist/* --clobber

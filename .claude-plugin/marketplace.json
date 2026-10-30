@@ -1,0 +1,16 @@
+{
+  "name": "freckle-mcp-plugins",
+  "owner": {
+    "name": "Freckle"
+  },
+  "metadata": {
+    "description": "Official Freckle MCP plugins for coding agents"
+  },
+  "plugins": [
+    {
+      "name": "freckle-mcp",
+      "source": "./freckle-mcp",
+      "description": "Freckle through MCP: lists, enrichment, workflows, CRM imports, Signals and Ads audiences. No Freckle CLI required."
+    }
+  ]
+}
