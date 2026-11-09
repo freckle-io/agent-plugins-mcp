@@ -1,6 +1,6 @@
 ---
 name: freckle-plan
-description: "Plan a Freckle build: turn a sales call, transcript, meeting notes, a Slack thread or a loose idea into a build spec and plan before anything is built. Use it for \"build this\" or \"set this up\" asks, even when Freckle is not named."
+description: "Plan a Freckle build before anything is built: turn a sales call, transcript, meeting notes, a Slack thread or a loose idea the user wants built in Freckle into a build spec and plan. Use it when the user asks to build or set up something in Freckle."
 ---
 
 # Plan a Freckle build
