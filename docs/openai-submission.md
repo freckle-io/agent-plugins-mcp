@@ -49,8 +49,8 @@ All eight live in `extensions.com.openai.review.test_cases`. Every tool name was
 | P1 | Which Workspace, how many credits | `workspace_context`, `creditUsage_getCurrentCredits` | 0 |
 | P2 | Preview VPs of Sales at US software companies, don't build | `listBuilds_getAIArkFilters`, `listBuilds_getFilterValues`, `listBuilds_previewAIArkPeople` (or Apollo `listBuilds_previewPeople`) | 0 (preview only estimates) |
 | P3 | Workbook "Review Test" with 3 pasted domains, fill industry, size, HQ country | create Workbook and Dataset, `datasets_importDatasetCsv`, node lookup, `workflows_buildWorkflow`, then after a yes `datasets_triggerWorkflowDatasetConnection`, `workflowRuns_wait`, `datasets_listDatasetEntries` | A few, after a yes (for example, Apollo company enrichment is 1.04 per row) |
-| P4 | Summarize "Sample Target Accounts" | `workbooks_listWorkbooks`, `workbooks_getWorkbook`, `datasets_getDatasetEntryCount`, `workbooks_getWorkbookStats` | 0 |
-| P5 | Alert on ramp.com sales job openings, in Workbook "Review Signals" | `signals_listSignalTypes`, Workbook and two Datasets, `datasets_importDatasetCsv`, `signals_createSignalProviderConfiguration`, `signals_getSignalProviderConfiguration` | 0 at setup; 1.18 per job opening found afterwards |
+| P4 | Explain the "LinkedIn URL to Enriched Profile + Work Email" Workflow | `workflowNodes_listWorkflowNodes`, `workflows_getWorkflow`, `workflows_listWorkflowNodes` | 0 (explains only; the Workflow itself is up to 5.67 per row) |
+| P5 | 25 US companies like gusto.com (50 to 1,000 employees), List "Review Lookalikes" | `listBuilds_getAIArkFilters`, `listBuilds_previewAIArkCompanies`, then after a yes `listBuilds_createAIArkCompanies`, `listBuilds_run`, `listBuilds_get`, `datasets_listDatasetEntries` | 0 for the preview; the quoted import cost for at most 25 companies, after a yes |
 | N1 | Buy 5,000 credits and charge my card | None that change state | 0 |
 | N2 | Delete my Freckle account and everything in it | None | 0 |
 | N3 | Show Acme Corp's Workbooks | `workspace_context`; `workspace_select` answers 403 "You are not a member of that Workspace." | 0 |
@@ -59,30 +59,25 @@ Corrections to the 2026-11-09 draft:
 
 - P3 now lists `workflowNodes_getWorkflowNodes` and `workflowDrafts_getDraftSyntax` (BUILD.md takes node details from one `getWorkflowNodes` call) and the run step `datasets_triggerWorkflowDatasetConnection`, which the draft left out between the build and `workflowRuns_wait`. It notes that Codex with file access uses `workflowDrafts_initDraft` and `workflows_createDraftUploadUrl` instead of `workflows_buildWorkflow`.
 - P2 allows either provider: LIST.md says to recommend AI Ark or Apollo when the user names none, and Apollo's preview is `listBuilds_previewPeople`, not `previewApolloPeople`.
-- P4 uses `workbooks_getWorkbook` and `workbooks_getWorkbookStats` (per-connection row outcomes and `lastRunAt`) instead of `datasets_listWorkbookDatasets` and `workflowRuns_listWorkflowRuns`, which is per Workflow, not per Workbook. The Workbook name drops the en dash so it is easy to type.
-- P5 names a new Workbook so the seeded one stays unchanged for P4, and states the per-finding cost, since a Signal keeps charging after the review.
+- P4 explains the managed `LinkedIn URL to Enriched Profile + Work Email` Workflow (`019faa02-4df6-76eb-82d1-5887fae00693`) instead of summarizing a seeded Workbook. Managed Workflows are visible in every Workspace, so the reviewer account needs no seeded data. Live definition: input `linkedin_url`; outputs `email`, `isValid`, `full_name`, `company_domain`, `emailSource`, `profile_source`, `zerobounceStatus`, `failureReason`; maximum 5.67 credits per row, 0 when nothing billable is found.
+- P5 is a capped AI Ark lookalike List instead of a job-openings Signal: it is a one-off cost with nothing left running after the review, and it covers the preview, create and run path end to end.
 - N2 asks to delete the account rather than "all my data": no tool deletes an account or Workspace, so that refusal is real. The `freckle` skill gained one ground rule to match: delete or archive only named items, each confirmed, never bulk-delete, and send account deletion to Freckle support. Cost confirmation, samples and secret handling are unchanged.
 
 ## Placeholders left
 
-| Field | Placeholder | Replace with |
-| --- | --- | --- |
-| `interface.supportURL` | `https://freckle.io/TODO-REPLACE-support-url` | A live support page. `https://freckle.io/support` redirects to a 404. |
-| `author.email` (both manifests) | `todo-replace-author-email@freckle.io` | A publisher contact. The site only publishes `privacy@freckle.io` and `legal@freckle.io`. |
-| `review.demo_recording_url` | `https://freckle.io/TODO-REPLACE-demo-recording-url` | A reviewer-accessible video of all 8 cases. |
+None.
 
-Also worth a look: `interface.category` stays `Productivity`; `Business & Operations` may fit a GTM tool better. No `brandColor` is set, and `publication.countries` is omitted, so no country restriction is applied.
+Also worth a look: `interface.category` stays `Productivity`; `Business & Operations` may fit a GTM tool better. `brandColor` is `#6366f1`, and `publication.countries` is omitted, so no country restriction is applied.
 
 ## Steps only you can do
 
-1. **Support URL.** Publish a support page and put it in `interface.supportURL`. Set `author.email`.
+1. ~~**Support URL.**~~ Done: `interface.supportURL` is the Typeform support form and `author.email` is `support@freckle.io`.
 2. **Reviewer account.** Create a Clerk user that signs in with email and password only: no MFA, no email or SMS code, no magic link, and no new-device verification. Give it:
    - One Workspace with about 200 credits, of which the 8 cases use fewer than 10.
-   - A Workbook named **Sample Target Accounts** with about 20 company rows (name, domain) and one connected Workflow that has already run, so P4 has run outcomes to report.
    - No membership in any Workspace named Acme Corp (N3).
    - No integrations are needed.
-   Run all 8 cases on it before submitting. Afterwards, delete the P5 Signal so it stops charging per finding, and archive "Review Test" and "Review Signals" so a rerun starts clean.
-3. **Demo recording.** Record the 8 cases on that account, in ChatGPT and Codex, and set `review.demo_recording_url`.
+   Run all 8 cases on it before submitting. Afterwards, archive "Review Test" and "Review Lookalikes" so a rerun starts clean.
+3. ~~**Demo recording.**~~ Done: `review.demo_recording_url` is https://youtu.be/fZmI2_lisGw.
 4. **Organization verification.** Complete business verification for Freckle at platform.openai.com → Settings → Organization → General, and make sure the submitter is an owner or has **Apps Management Write**.
 5. **Upload the ZIP.** platform.openai.com/plugins → **Upload new or existing plugin** → choose the Freckle developer identity → upload. Fix any **Metadata & Skills** findings and wait for the skill scans (up to 2 hours).
 6. **Domain verification.** In **MCPs → Connect**, copy the challenge token and serve it as plain text (the token only, no JSON) at `https://next-api.freckle.io/.well-known/openai-apps-challenge`, or at an allowed parent such as `https://freckle.io/.well-known/openai-apps-challenge`. That path currently returns 404 on `next-api`.
@@ -91,7 +86,7 @@ Also worth a look: `interface.category` stays `Productivity`; `Business & Operat
 
 ### Risks to settle before submitting
 
-- **Billing link.** `workspace_context` returns `plansAndBillingUrl` (`<app>/<org>/workbooks?settings=billing`), and its description tells the model to give it out when credits run low. The guidelines allow a link to an informational plans page but not to a page that starts a purchase or upgrade. If that settings view has buy or upgrade buttons, the plugin should point to an informational page instead.
+- **Billing link.** `workspace_context` returns `plansAndBillingUrl` (`<app>/<org>/workbooks?settings=billing`), and its description tells the model to give it out when credits run low. The guidelines allow a link to an informational plans page but not to a page that starts a purchase or upgrade. If that settings view has buy or upgrade buttons, point the tool at the informational page `https://www.freckle.io/pricing` instead (a change in `freckle-io/next`). N1 already refers users to that page.
 - **Annotation justifications.** The guidelines say they are no longer required, but the submission-errors page still lists `justification_required`. The **Why** column in the appendix can be pasted if the portal asks.
 - **Two manifests in the ZIP.** The portal accepts `.codex-plugin/plugin.json` or `.claude-plugin/plugin.json`. The Codex one carries the listing and review fields. If the upload reports `claude_format_normalized`, the portal read the Claude manifest instead; remove `.claude-plugin/` from that ZIP and upload again.
 

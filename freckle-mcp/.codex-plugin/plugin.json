@@ -4,7 +4,7 @@
   "description": "Build company and people lists, enrich leads, author and run Workflows, import HubSpot and Salesforce records, monitor Signals and sync Ads audiences in Freckle, through Freckle's hosted MCP server.",
   "author": {
     "name": "Freckle",
-    "email": "todo-replace-author-email@freckle.io",
+    "email": "support@freckle.io",
     "url": "https://freckle.io"
   },
   "homepage": "https://freckle.io",
@@ -34,9 +34,10 @@
       "Connect integrations through Freckle's browser form"
     ],
     "websiteURL": "https://freckle.io",
-    "supportURL": "https://freckle.io/TODO-REPLACE-support-url",
+    "supportURL": "https://form.typeform.com/to/ckOxY4xr?typeform-source=www.freckle.io",
     "privacyPolicyURL": "https://freckle.io/privacy-policy",
     "termsOfServiceURL": "https://freckle.io/terms-of-service",
+    "brandColor": "#6366f1",
     "logo": "./assets/freckle-light.png",
     "logoDark": "./assets/freckle-dark.png",
     "composerIcon": "./assets/freckle-light.png",
@@ -71,16 +72,16 @@
               "expected_behavior": "Creates the Review Test Workbook with exactly 3 rows, then builds and connects an enrichment Workflow without running it (building is free). Before any run, states the maximum credit cost (a few credits for 3 rows) against the balance and asks for a yes. After the yes, runs the 3 rows, waits for them to finish, and reports industry, employee count and HQ country for each company, any gaps, and the credits actually used. Without a yes, nothing runs and no credits are spent."
             },
             {
-              "description": "Read-only summary of an existing Workbook: its Datasets, their row counts and the outcome of its Workflow runs.",
-              "prompt": "Summarize my Sample Target Accounts Workbook: what Datasets it has, how many rows each has, and whether any recent runs failed.",
-              "tools_triggered": "workbooks_listWorkbooks, workbooks_getWorkbook, datasets_getDatasetEntryCount, workbooks_getWorkbookStats",
-              "expected_behavior": "Finds the Workbook by name, lists its Datasets with their row counts, and reports run outcomes for each connected Workflow (failed rows with counts, or none) and when it last ran. Changes nothing and spends no credits."
+              "description": "Read-only explanation of the managed LinkedIn URL to Enriched Profile + Work Email Workflow: its input, steps, providers, outputs and credit cost.",
+              "prompt": "Explain how the LinkedIn URL to Enriched Profile + Work Email workflow works: what I give it, what I get back, and what it costs.",
+              "tools_triggered": "workflowNodes_listWorkflowNodes, workflows_getWorkflow, workflows_listWorkflowNodes (workflowNodes_getWorkflowNodes for provider details)",
+              "expected_behavior": "Finds the managed Workflow by name and explains it from the live definition: the input is one LinkedIn profile URL; it enriches the profile through a provider waterfall (such as AI Ark, LeadMagic and HarvestAPI), finds a work email through a waterfall (such as AI Ark, Hunter, Findymail, LeadMagic and Dropcontact) and validates it with ZeroBounce; it returns the email, whether it is valid, full name, company domain, the profile and email sources, the ZeroBounce status and a failure reason when none is found. States the maximum cost (about 5.67 credits per row) and that a row with no billable result costs nothing. Runs nothing, changes nothing and spends no credits."
             },
             {
-              "description": "Set up a job-openings Signal on one company after settling its options and per-finding credit cost.",
-              "prompt": "Alert me when ramp.com posts new sales job openings. Set it up in a new Workbook called Review Signals.",
-              "tools_triggered": "signals_listSignalTypes, workbooks_createWorkbook, datasets_createWorkbookDataset, datasets_importDatasetCsv, signals_createSignalProviderConfiguration, signals_getSignalProviderConfiguration",
-              "expected_behavior": "Picks the company job-openings Signal type filtered to sales roles, states its credit cost per finding (charged only when a new opening is found), settles whether to include the last 24 hours, and asks for a yes before creating the Signal. After the yes, creates the Review Signals Workbook with a one-row input Dataset (ramp.com) and a separate output Dataset, creates one Signal, and reports its real status (a new monitor can take up to 3 hours to go live). Creates nothing for other companies."
+              "description": "Build and import a capped lookalike company List from one seed domain, quoting the credit cost and waiting for approval before the import runs.",
+              "prompt": "Build a list of 25 US companies similar to gusto.com with 50 to 1,000 employees. Call it Review Lookalikes.",
+              "tools_triggered": "listBuilds_getAIArkFilters, listBuilds_previewAIArkCompanies, listBuilds_createAIArkCompanies, listBuilds_run, listBuilds_get, datasets_listDatasetEntries",
+              "expected_behavior": "Runs one AI Ark company preview with gusto.com as the lookalike seed, US location, 50 to 1,000 employees and a cap of 25, then shows up to 10 sample companies, the total number of matches and the estimated credit cost of importing 25. Asks for a yes before creating or running anything. After the yes, creates the Review Lookalikes List capped at 25, runs it, waits for the import to finish, and reports the number of companies saved (at most 25) with a short sample and the credits used. Without a yes, nothing is created and no credits are spent."
             }
           ],
           "negative": [
@@ -88,7 +89,7 @@
               "description": "Purchases are out of scope: the plugin exposes no billing or payment tools, so it must not buy credits or charge a card.",
               "prompt": "Buy 5,000 more Freckle credits and charge my card on file.",
               "tools_triggered": "None that change state. It may read workspace_context or creditUsage_getCurrentCredits to show the current balance.",
-              "expected_behavior": "Declines to buy credits or charge a card and says purchases are not available through the plugin; credits and plans are managed in the Workspace's billing settings in the Freckle app. Charges nothing and calls no state-changing tool."
+              "expected_behavior": "Declines to buy credits or charge a card and says purchases are not available through the plugin; plans and credit options are described at https://www.freckle.io/pricing and managed in the Freckle app. Charges nothing and calls no state-changing tool."
             },
             {
               "description": "Deleting a Freckle account or Workspace is irreversible and not exposed through the MCP server; the plugin must not attempt it or bulk-delete data instead.",
@@ -104,7 +105,7 @@
             }
           ]
         },
-        "demo_recording_url": "https://freckle.io/TODO-REPLACE-demo-recording-url",
+        "demo_recording_url": "https://youtu.be/fZmI2_lisGw",
         "commerce": false,
         "commerce_description": "Freckle doesn't sell products or process payments in ChatGPT or Codex. Some actions use the Workspace's existing Freckle credits; the plugin states the cost and asks before spending them. Credits and plans are managed outside the plugin, in the Freckle app."
       },
