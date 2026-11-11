@@ -46,7 +46,7 @@ claude mcp add --transport http freckle https://next-api.freckle.io/mcp/full
 codex plugin marketplace add freckle-io/agent-plugins-mcp
 ```
 
-Open Codex, run `/plugins`, install **Freckle MCP** and sign in when Codex asks.
+Open Codex, run `/plugins`, install **Freckle** and sign in when Codex asks.
 
 MCP server only, without the skills:
 
