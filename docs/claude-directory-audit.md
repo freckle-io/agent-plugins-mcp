@@ -1,104 +1,164 @@
-# Claude directory audit: 1.0.1
+# Claude directory audit: isolated 1.0.2 package
 
-The directory refused 1.0.0 at commit `4053a6b` because an unverified
-organization's submission must use fields Claude Code reads and the directory's
-remote-MCP/package.json allow-lists. The only offending field in the Claude
-configuration was `mcpServers.freckle.extensions` in `freckle-mcp/.mcp.json`.
+## Exact submission target
 
-## Sources and scope
+- **Repository:** `freckle-io/agent-plugins-mcp`
+- **Plugin folder:** `claude/freckle-mcp`
+- **Manifest:** `claude/freckle-mcp/.claude-plugin/plugin.json`
+- **Version:** `1.0.2`
 
-Checked on November 16, 2026 against:
+Submit that folder after this PR lands. Do not submit the repository root or
+`freckle-mcp/`: those contain repository tooling and Codex/ChatGPT packaging.
+The root Claude marketplace now points to `./claude/freckle-mcp`, so the existing
+marketplace/install commands continue to work.
 
-- [Claude plugin manifest reference](https://code.claude.com/docs/en/plugins/manifest-reference)
-- [Claude marketplace reference](https://code.claude.com/docs/en/plugins/marketplace-reference)
-- [Claude MCP reference](https://code.claude.com/docs/en/mcp)
-- The directory rejection's explicit remote-MCP and package.json allow-lists.
+```text
+claude/freckle-mcp/
+├── .claude-plugin/
+│   ├── plugin.json
+│   └── icon.png
+├── .mcp.json
+├── LICENSE
+├── README.md
+└── skills/
+    ├── freckle-plan/SKILL.md
+    └── freckle/
+        ├── SKILL.md
+        ├── ADS.md
+        ├── BUILD.md
+        ├── LIST.md
+        └── SIGNALS.md
+```
 
-The Claude marketplace points to `./freckle-mcp`. Its manifest names an MCP
-file and `./skills/`. Claude also automatically reads a plugin-root `.mcp.json`
-before its manifest's declared MCP files; adding a clean file alone would leave
-the OpenAI extension in that automatic load path.
+## Why 1.0.1 was still rejected
 
-## Field-by-field audit
+The resubmission after PR #2 merged at `7648af8` reported files outside the
+unverified-organization allow-list and an incompletely readable plugin.
+The previous package still contained:
 
-Paths below are JSON property paths. Array indexes identify the existing entry.
-
-| File | Field | Result |
+| Old path | Problem | Resolution |
 | --- | --- | --- |
-| `.claude-plugin/marketplace.json` | `name` | Documented marketplace identifier; keep. |
-| Same | `owner` | Documented maintainer object; keep. |
-| Same | `owner.name` | Documented required maintainer name; keep. |
-| Same | `metadata` | Documented container for marketplace description/version/pluginRoot; keep. |
-| Same | `metadata.description` | Documented alternate location for the marketplace description; keep. This is not a free-form plugin-entry metadata field. |
-| Same | `plugins` | Documented plugin-entry array; keep. |
-| Same | `plugins[0].name` | Documented plugin identifier; keep. |
-| Same | `plugins[0].source` | Documented relative plugin source; keep `./freckle-mcp`. |
-| Same | `plugins[0].description` | Documented entry description; keep. |
-| `freckle-mcp/.claude-plugin/plugin.json` | `name` | Documented plugin identifier; keep. |
-| Same | `description` | Documented plugin description; keep. |
-| Same | `version` | Documented plugin version; bump from `1.0.0` to `1.0.1`. |
-| Same | `author` | Documented author object; keep. |
-| Same | `author.name` | Documented required author name; keep. |
-| Same | `author.email` | Documented optional author email; keep. |
-| Same | `author.url` | Documented optional author URL; keep. |
-| Same | `homepage` | Documented URL; keep. |
-| Same | `repository` | Documented source URL; keep. |
-| Same | `license` | Documented license identifier; keep. |
-| Same | `keywords` | Documented array of strings; keep. |
-| Same | `mcpServers` | Documented plugin-relative JSON config path; change to `./.claude-plugin/mcp.json`. |
-| Same | `skills` | Documented plugin-relative skills directory; keep `./skills/`. |
-| Old `freckle-mcp/.mcp.json`; new `freckle-mcp/.claude-plugin/mcp.json` | `mcpServers` | Documented server map wrapper; keep. |
-| Same | `mcpServers.freckle` | Documented named server object; keep. |
-| Same | `mcpServers.freckle.type` | Directory allow-list permits this; keep `"http"`. |
-| Same | `mcpServers.freckle.url` | Directory allow-list permits this; keep `https://next-api.freckle.io/mcp/full`. |
-| Old `freckle-mcp/.mcp.json` | `mcpServers.freckle.extensions` | Outside the remote-server allow-list; remove from Claude's load path. |
-| Same | `mcpServers.freckle.extensions.com.openai` | OpenAI-only namespace under the unsupported extension; retain only for Codex/ChatGPT. |
-| Same | `mcpServers.freckle.extensions.com.openai.auth` | OpenAI-only authentication extension; retain only for Codex/ChatGPT. |
-| Same | `mcpServers.freckle.extensions.com.openai.auth.type` | OpenAI-only `"oauth"` value, not a Claude OAuth config; retain only for Codex/ChatGPT. |
-| Same | `mcpServers.freckle.extensions.com.openai.auth.client` | OpenAI-only client configuration; retain only for Codex/ChatGPT. |
-| Same | `mcpServers.freckle.extensions.com.openai.auth.client.mode` | OpenAI-only `"cimd"` value; retain only for Codex/ChatGPT. |
-| Any `package.json` | All fields | No package.json exists anywhere in the repository. No package cleanup is needed. |
+| `freckle-mcp/.claude-plugin/mcp.json` | Inside `.claude-plugin`, only plugin.json, images and a constrained marketplace.json are allowed. | Move the clean config to the new package's root `.mcp.json`. |
+| `freckle-mcp/.codex-plugin/plugin.json` | Another client's plugin packaging is in the submitted folder. | Leave it in the Codex package, outside the new Claude folder. |
+| `freckle-mcp/.codex-plugin/mcp.json` | Codex-only configuration is in the submitted folder. | Leave it outside the new Claude folder, preserving OAuth CIMD. |
+| `freckle-mcp/assets/freckle-light.png` | The image is allowed, but the directory validator does not recognize its filename as the default icon. | Copy the existing 520×520 image to `.claude-plugin/icon.png`. |
+| `freckle-mcp/` | It has no local README or license; earlier validation used the repository README. | Give the isolated folder its own README and a byte-identical license copy. |
 
-No other fields in these Claude-read JSON files are outside the documented
-schemas or the applicable directory allow-list. The remote-server allow-list
-does not replace the plugin or marketplace schemas.
+Before this change, `claude plugin validate --strict --profile directory
+freckle-mcp` exited 1 for `ICON_MISSING` and also named `PRIVACY_URL_MISSING`.
+The new manifest explicitly sets the documented `privacyPolicyUrl`, and the
+recognized icon removes the warning. The new folder also validates when copied
+outside this git repository, proving it does not depend on parent files.
 
-Claude's new server has exactly `type` and `url`. No `oauth` object is needed:
-Claude discovers the server's OAuth metadata, registers a client, and prompts
-for authorization. No client ID was invented or copied from OpenAI.
+## Reproducible inventory
 
-## Compatibility and file changes
+The complete script is [scripts/audit_claude_directory.py](../scripts/audit_claude_directory.py).
+It uses `git ls-files --stage -z` and reads every tracked worktree file; stage
+new files before running it. `--ref` instead audits the committed blobs at a
+specified git ref. It rejects untracked files inside the submitted folder, so
+a successful run cannot silently omit a local extra file there.
 
-- Move the old root `.mcp.json`, byte for byte, to
-  `freckle-mcp/.codex-plugin/mcp.json`; remove the root file so Claude cannot
-  auto-load its OpenAI extension.
-- Add `freckle-mcp/.claude-plugin/mcp.json` with only the HTTP type and URL.
-- Update each client's manifest to reference its own MCP file and version
-  `1.0.1`. Every other Codex manifest field is unchanged, including `interface`
-  and all `extensions.com.openai` review and publication data.
-- Leave `.agents/plugins/marketplace.json`, the Claude marketplace, skills,
-  assets, and the publish workflow unchanged. Update README and OpenAI
-  submission instructions for the new paths.
+```sh
+python3 scripts/audit_claude_directory.py
+# Historical comparison (expected to fail):
+python3 scripts/audit_claude_directory.py --ref 7648af8 --plugin freckle-mcp
+```
+
+The guard checks regular files (no symlinks/submodules), ASCII-safe path names,
+allowed extensions and special filenames, shebangs, UTF-8 and NUL bytes in
+text, package-manager configs, other-client/nested Claude packaging,
+`.claude/skills`, restricted `.claude-plugin` contents and marketplace sources,
+JSON/YAML in egress, Markdown-only commands/agents, skill-folder structure,
+output-styles, and the JSON fields used by this package. New hooks/LSP/monitor
+or package.json configs fail closed until their schema checks are added.
+The checks for required package files, matching license/icon and identical
+skill copies are additional repository packaging checks.
+
+The script is intentionally a guard for this repository, not a replacement for
+Claude's full schema validator. CI runs both. The excluded `.py` audit script is
+repository tooling and is deliberately outside the submitted folder.
+
+`SUBMIT` rows are checked relative to `claude/freckle-mcp`. `EXCLUDE` rows are
+outside that folder; their rule results describe their repository paths and do
+not contribute to submission failures. This covers every tracked file, including
+files that must remain outside the submission.
+
+| Tracked file | Submission scope | File-rule result |
+| --- | --- | --- |
+| `.agents/plugins/marketplace.json` | EXCLUDE | allowed type/path; UTF-8 without NUL where text |
+| `.claude-plugin/marketplace.json` | EXCLUDE | allowed type/path; UTF-8 without NUL where text |
+| `.github/workflows/publish-skills.yml` | EXCLUDE | allowed type/path; UTF-8 without NUL where text |
+| `.github/workflows/validate-plugins.yml` | EXCLUDE | allowed type/path; UTF-8 without NUL where text |
+| `LICENSE` | EXCLUDE | allowed type/path; UTF-8 without NUL where text |
+| `README.md` | EXCLUDE | allowed type/path; UTF-8 without NUL where text |
+| `assets/freckle.png` | EXCLUDE | allowed type/path; UTF-8 without NUL where text |
+| `claude/freckle-mcp/.claude-plugin/icon.png` | SUBMIT | allowed type/path; UTF-8 without NUL where text |
+| `claude/freckle-mcp/.claude-plugin/plugin.json` | SUBMIT | allowed type/path; UTF-8 without NUL where text |
+| `claude/freckle-mcp/.mcp.json` | SUBMIT | allowed type/path; UTF-8 without NUL where text |
+| `claude/freckle-mcp/LICENSE` | SUBMIT | allowed type/path; UTF-8 without NUL where text |
+| `claude/freckle-mcp/README.md` | SUBMIT | allowed type/path; UTF-8 without NUL where text |
+| `claude/freckle-mcp/skills/freckle-plan/SKILL.md` | SUBMIT | allowed type/path; UTF-8 without NUL where text |
+| `claude/freckle-mcp/skills/freckle/ADS.md` | SUBMIT | allowed type/path; UTF-8 without NUL where text |
+| `claude/freckle-mcp/skills/freckle/BUILD.md` | SUBMIT | allowed type/path; UTF-8 without NUL where text |
+| `claude/freckle-mcp/skills/freckle/LIST.md` | SUBMIT | allowed type/path; UTF-8 without NUL where text |
+| `claude/freckle-mcp/skills/freckle/SIGNALS.md` | SUBMIT | allowed type/path; UTF-8 without NUL where text |
+| `claude/freckle-mcp/skills/freckle/SKILL.md` | SUBMIT | allowed type/path; UTF-8 without NUL where text |
+| `docs/claude-directory-audit.md` | EXCLUDE | allowed type/path; UTF-8 without NUL where text |
+| `docs/openai-submission.md` | EXCLUDE | allowed type/path; UTF-8 without NUL where text |
+| `freckle-mcp/.codex-plugin/mcp.json` | EXCLUDE | other client's plugin packaging |
+| `freckle-mcp/.codex-plugin/plugin.json` | EXCLUDE | other client's plugin packaging |
+| `freckle-mcp/assets/freckle-dark.png` | EXCLUDE | allowed type/path; UTF-8 without NUL where text |
+| `freckle-mcp/assets/freckle-light.png` | EXCLUDE | allowed type/path; UTF-8 without NUL where text |
+| `freckle-mcp/skills/freckle-plan/SKILL.md` | EXCLUDE | allowed type/path; UTF-8 without NUL where text |
+| `freckle-mcp/skills/freckle/ADS.md` | EXCLUDE | allowed type/path; UTF-8 without NUL where text |
+| `freckle-mcp/skills/freckle/BUILD.md` | EXCLUDE | allowed type/path; UTF-8 without NUL where text |
+| `freckle-mcp/skills/freckle/LIST.md` | EXCLUDE | allowed type/path; UTF-8 without NUL where text |
+| `freckle-mcp/skills/freckle/SIGNALS.md` | EXCLUDE | allowed type/path; UTF-8 without NUL where text |
+| `freckle-mcp/skills/freckle/SKILL.md` | EXCLUDE | allowed type/path; UTF-8 without NUL where text |
+| `scripts/audit_claude_directory.py` | EXCLUDE | file type outside allow-list |
+
+Inventory: 31 tracked files; 11 submitted; 20 excluded; 0 submission violations.
+
+## Rule coverage and config fields
+
+- All 11 submitted files are ordinary files: 6 skill Markdown files, a README,
+  LICENSE, 2 JSON objects and one PNG. The PNG is the existing Freckle logo,
+  byte-identical to `freckle-mcp/assets/freckle-light.png`.
+- No submitted file has a shebang, odd path characters, non-UTF-8 text or NUL in
+  text. No package-manager config, `.claude/skills`, other plugin, nested
+  `.claude-plugin`, egress config, commands/agents, hooks/LSP/monitor config,
+  output-styles or package.json is present.
+- `.claude-plugin` contains exactly `plugin.json` and `icon.png`.
+- Each of the two `skills/` subfolders has its own `SKILL.md`; all six files
+  match the existing Codex/source skill files byte for byte.
+
+| Config | Fields | Schema disposition |
+| --- | --- | --- |
+| Claude plugin.json | `name`, `description`, `version`, `homepage`, `repository`, `license`, `keywords`, `skills`, `mcpServers` | Documented plugin fields; version is now 1.0.2 and MCP path is `./.mcp.json`. |
+| Claude plugin.json author | `name`, `email`, `url` | All documented author fields; retained. |
+| Claude plugin.json | `privacyPolicyUrl` | Documented directory-listing field recognized by the validator; added to clear its privacy finding. |
+| Claude .mcp.json | `mcpServers.freckle.type`, `mcpServers.freckle.url` | Exactly `http` and `https://next-api.freckle.io/mcp/full`; no extensions or OAuth overrides. |
+| Root Claude marketplace | `name`, `owner.name`, `metadata.description`, `plugins[].name`, `plugins[].source`, `plugins[].description` | Documented fields; only source changes to `./claude/freckle-mcp`. Outside the submitted folder. |
+
+Sources: the resubmission's explicit file restrictions,
+[Claude manifest reference](https://code.claude.com/docs/en/plugins/manifest-reference),
+[marketplace reference](https://code.claude.com/docs/en/plugins/marketplace-reference),
+and [MCP reference](https://code.claude.com/docs/en/mcp), checked November 16, 2026.
 
 ## Verification
 
-Used Claude Code **2.1.318**:
+Claude Code **2.1.318**:
 
 ```sh
+claude plugin validate --json --strict --profile directory claude/freckle-mcp
 claude plugin validate --json --strict .claude-plugin/marketplace.json
-claude plugin validate --json --strict freckle-mcp
-claude plugin validate --json --profile directory freckle-mcp
 ```
 
-All three commands passed. The manifest checks reported no errors or warnings.
-The separate directory findings contained an existing, nonblocking
-`ICON_MISSING` warning and an informational `PRIVACY_URL_MISSING` finding
-(privacy URL taken from the repository README). No hold or incomplete checks
-were reported. The validator also passed the old configuration, so validation
-alone does not prove compliance with the rejection's stricter allow-list.
+Both pass with **zero errors, warnings or directory findings**, no incomplete
+checks and no parent-directory notes. The standalone copy also passes the same
+strict directory profile with zero findings.
 
-Installed this checkout with a separate temporary `CLAUDE_CONFIG_DIR`, without
-changing the user's normal Claude settings:
+Using a new temporary `CLAUDE_CONFIG_DIR`:
 
 ```sh
 claude plugin marketplace add "$PWD" --json
@@ -106,30 +166,45 @@ claude plugin install freckle-mcp@freckle-mcp-plugins --json
 claude plugin list --json
 claude plugin details freckle-mcp@freckle-mcp-plugins
 claude mcp list
-claude mcp login --no-browser plugin:freckle-mcp:freckle
 ```
 
-- Installation succeeded at version `1.0.1`. The loaded server config contained
-  only `type` and `url`; the inventory showed two skills and one MCP server.
-- The live server health check returned
-  `plugin:freckle-mcp:freckle: https://next-api.freckle.io/mcp/full (HTTP) - ! Needs authentication`.
-- In an interactive terminal, login discovered OAuth and generated an
-  authorization URL at `https://clerk.freckle.io/oauth/authorize` with PKCE,
-  client ID, resource and redirect parameters. Canceled at
-  `Waiting for authorization`; no browser sign-in or tool calls were completed.
-- Parsed all six repository JSON files as plain objects. Confirmed no
-  package.json exists and the Claude server has exactly the required fields.
-- Compared the moved Codex MCP file byte for byte with `4053a6b`; it is
-  identical. Compared the Codex manifest structurally after excluding only
-  `version` and `mcpServers`; it is identical. The agents marketplace is also
-  byte-identical. A fresh Codex/ChatGPT OAuth session was not exercised.
-- Ran the exact `Build zips` shell block from `publish-skills.yml` in a temporary
-  directory. Both individual skill archives and the combined archive built;
-  checked their skill contents and every SHA256SUMS entry. No release upload or
-  tag push was run. The workflow still reads only `freckle-mcp/skills/`; its path
-  filters mean this config/documentation-only PR will not trigger publishing.
-- `git diff --check` passed.
+Installation succeeds at **1.0.2** from `claude/freckle-mcp`, and the inventory
+shows **two skills and one MCP server**. Its loaded server has only `type` and
+`url`. The live health check returns:
 
-The directory runs checks beyond the local validator. Actual directory
-acceptance requires resubmission and a decision from Anthropic; it has not been
-observed by this audit.
+```text
+plugin:freckle-mcp:freckle: https://next-api.freckle.io/mcp/full (HTTP) - ! Needs authentication
+```
+
+Browser sign-in and authenticated MCP tool calls were not run. This is local
+validation and installation evidence, not a claim of directory acceptance.
+Izak handles the resubmission.
+
+Other checks:
+
+- Exercised the audit's individual rejection rules with negative fixtures,
+  including shebang, invalid UTF-8, NUL, forbidden paths/types, unknown manifest
+  and remote-MCP fields, and an extra local marketplace plugin. Allowed skill
+  paths and symlink rejection were also checked.
+- Compared every remaining `freckle-mcp/` file and the agents marketplace with
+  `7648af8`: **byte-identical**. Codex's manifest remains **1.0.1**, with its
+  listing and review/publication extensions unchanged; its own release version
+  is independent of Claude's 1.0.2. No Codex/ChatGPT login was run.
+- Built and inspected the OpenAI upload ZIP. It contains `.codex-plugin` and the
+  referenced MCP file with OAuth CIMD; it contains no Claude manifest/package.
+- Ran the unchanged `publish-skills.yml` **Build zips** shell block in a temporary
+  directory, verified combined archive contents and every SHA256SUMS entry. No
+  release upload or tag mutation was run.
+- `.github/workflows/validate-plugins.yml` now runs the inventory/skill-copy guard
+  and both strict Claude validations on PRs and main, using pinned Claude Code
+  2.1.318. It does not publish releases.
+- `git diff --check` passes.
+
+## Keeping skills in sync
+
+`freckle-mcp/skills/` remains the source for the existing download/release
+workflow and Codex package. Update the matching files under
+`claude/freckle-mcp/skills/` in the same change. CI compares their exact file
+sets and contents, so a missing copy, added file or edited skill cannot silently
+drift between clients. The submitted folder uses real files, without symlinks or
+paths outside its root.
