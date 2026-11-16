@@ -34,6 +34,10 @@ Install the plugin. It connects the MCP server and adds the skills in one step:
 Then run `/mcp`, pick **freckle**, sign in to Freckle in the browser and choose
 your Workspace.
 
+For the Claude plugin directory, submit repository `freckle-io/agent-plugins-mcp`
+and folder **`claude/freckle-mcp`**. See the [file inventory and validation
+report](./docs/claude-directory-audit.md).
+
 MCP server only, without the skills:
 
 ```bash
@@ -109,15 +113,21 @@ For Codex, unzip into `~/.codex/skills` instead. Checksums are in
 
 ## What's inside
 
-- **`freckle-mcp/.claude-plugin/mcp.json`**: the Claude Code MCP connection,
+- **`claude/freckle-mcp/.mcp.json`**: the Claude Code MCP connection,
   using automatic OAuth discovery.
 - **`freckle-mcp/.codex-plugin/mcp.json`**: the Codex/ChatGPT MCP connection,
   including OpenAI's OAuth CIMD extension.
 - **`freckle-mcp/skills/`**: the `freckle` and `freckle-plan` skills. They add
   the GTM judgment the tool descriptions don't carry: confirm the cost before
   spending credits, sample 10 rows before a big run, report real outcomes.
-- **`freckle-mcp/.claude-plugin/`, `freckle-mcp/.codex-plugin/`**: plugin
-  manifests for Claude Code and Codex.
+- **`claude/freckle-mcp/`**: the complete Claude-only submission package,
+  including its own manifest, icon, README, license and skill copies.
+- **`freckle-mcp/.codex-plugin/`**: Codex/ChatGPT manifest and MCP config.
+
+When changing skills, update both `freckle-mcp/skills/` and
+`claude/freckle-mcp/skills/` with identical files. Run
+`python3 scripts/audit_claude_directory.py` to check the submission file rules
+and detect skill drift; CI runs the same check.
 
 The plugin ships no binaries, hooks or secrets. Sign-in goes through your
 client's OAuth flow, and integration secrets go only through the browser form

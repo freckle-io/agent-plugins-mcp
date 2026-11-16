@@ -14,7 +14,6 @@ The package is the Codex format:
 | `freckle-mcp/.codex-plugin/mcp.json` | The one remote MCP server, `https://next-api.freckle.io/mcp/full`, with OAuth (CIMD) |
 | `freckle-mcp/skills/` | `freckle` (router plus LIST, BUILD, SIGNALS, ADS) and `freckle-plan` |
 | `freckle-mcp/assets/` | `freckle-light.png` and `freckle-dark.png`, both 520×520 |
-| `freckle-mcp/.claude-plugin/plugin.json` | Claude Code manifest; identity fields match the Codex manifest |
 
 No hooks, `.app.json`, `apps`, server headers, secrets, `test_credentials` or `reviewer_instructions`.
 
@@ -24,7 +23,7 @@ Build the ZIP the portal takes (the plugin in one top-level folder, no sibling f
 Z=$(mktemp -d) && zip -q -r -X "$Z/freckle-mcp.zip" freckle-mcp -x '*.DS_Store' && unzip -l "$Z/freckle-mcp.zip"
 ```
 
-Don't commit the ZIP. Bump `version` in both manifests for every new upload; the portal warns when a version is reused.
+Don't commit the ZIP. Bump `version` in the Codex manifest for every new OpenAI upload; the portal warns when a version is reused. The separate Claude package in `claude/freckle-mcp/` has its own release version and is not included in this ZIP.
 
 ### MCP configuration
 
@@ -36,7 +35,7 @@ Don't commit the ZIP. Bump `version` in both manifests for every new upload; the
 }
 ```
 
-- **`"type": "http"` stays.** The docs' Codex example omits `type` and the portable `mcp.json` uses `streamable-http`, but OpenAI's own Codex-format plugins (Figma, Notion, Linear in `openai/plugins`) use `"type": "http"`. The original local check with Codex 0.166 installed the plugin and resolved the server as `streamable_http`; 1.0.1 preserves that server config byte for byte in `.codex-plugin/mcp.json`. Claude now reads its separate `.claude-plugin/mcp.json`, also with `"type": "http"`; its installation, OAuth prompt and validation are recorded in [the Claude directory audit](./claude-directory-audit.md).
+- **`"type": "http"` stays.** The docs' Codex example omits `type` and the portable `mcp.json` uses `streamable-http`, but OpenAI's own Codex-format plugins (Figma, Notion, Linear in `openai/plugins`) use `"type": "http"`. The original local check with Codex 0.166 installed the plugin and resolved the server as `streamable_http`; 1.0.1 preserves that server config byte for byte in `.codex-plugin/mcp.json`. Claude now reads `claude/freckle-mcp/.mcp.json` in its separate submission folder, also with `"type": "http"`; its installation, OAuth prompt and validation are recorded in [the Claude directory audit](./claude-directory-audit.md).
 - **CIMD is right for this server.** `https://clerk.freckle.io/.well-known/oauth-authorization-server` advertises `client_id_metadata_document_supported: true`, no `registration_endpoint` (so DCR is not available), `S256` and `authorization_response_iss_parameter_supported: true`. ChatGPT should therefore use the stable redirect `https://chatgpt.com/connector_platform_oauth_redirect` and client document `https://chatgpt.com/oauth/client.json`; the portal's **MCPs** page shows the exact values.
 - Clerk advertises the scopes `openid profile email public_metadata private_metadata offline_access user:org:read`. ChatGPT requests advertised OIDC scopes by default, so each must be enabled for the client.
 
@@ -88,7 +87,7 @@ Also worth a look: `interface.category` stays `Productivity`; `Business & Operat
 
 - **Billing link.** `workspace_context` returns `plansAndBillingUrl` (`<app>/<org>/workbooks?settings=billing`), and its description tells the model to give it out when credits run low. The guidelines allow a link to an informational plans page but not to a page that starts a purchase or upgrade. If that settings view has buy or upgrade buttons, point the tool at the informational page `https://www.freckle.io/pricing` instead (a change in `freckle-io/next`). N1 already refers users to that page.
 - **Annotation justifications.** The guidelines say they are no longer required, but the submission-errors page still lists `justification_required`. The **Why** column in the appendix can be pasted if the portal asks.
-- **Two manifests in the ZIP.** The portal accepts `.codex-plugin/plugin.json` or `.claude-plugin/plugin.json`. The Codex one carries the listing and review fields. If the upload reports `claude_format_normalized`, the portal read the Claude manifest instead; remove `.claude-plugin/` from that ZIP and upload again.
+- **One client per package.** The ZIP contains only the Codex manifest; the Claude-only package lives outside `freckle-mcp/`. Keep that separation when creating uploads so OpenAI reads the Codex listing and review fields.
 
 ## Annotation audit (report only; nothing in `freckle-io/next` was changed)
 

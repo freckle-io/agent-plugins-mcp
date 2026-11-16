@@ -1,0 +1,29 @@
+name: Validate plugins
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Audit submitted files and skill copies
+        run: python3 scripts/audit_claude_directory.py
+      - name: Install Claude validator
+        run: npm install --global @anthropic-ai/claude-code@2.1.318
+      - name: Validate Claude plugin and marketplace
+        run: |
+          claude plugin validate --strict --profile directory claude/freckle-mcp
+          claude plugin validate --strict .claude-plugin/marketplace.json
