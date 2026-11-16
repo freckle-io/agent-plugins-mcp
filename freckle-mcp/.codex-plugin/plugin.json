@@ -1,6 +1,6 @@
 {
   "name": "freckle-mcp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Build company and people lists, enrich leads, author and run Workflows, import HubSpot and Salesforce records, monitor Signals and sync Ads audiences in Freckle, through Freckle's hosted MCP server.",
   "author": {
     "name": "Freckle",
@@ -12,7 +12,7 @@
   "license": "MIT",
   "keywords": ["freckle", "sales", "lead enrichment", "list building", "crm", "signals", "ads audiences"],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json",
+  "mcpServers": "./.codex-plugin/mcp.json",
   "interface": {
     "displayName": "Freckle",
     "shortDescription": "Build and enrich lead lists",

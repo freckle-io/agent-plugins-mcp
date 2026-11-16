@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "freckle": {
+      "type": "http",
+      "url": "https://next-api.freckle.io/mcp/full"
+    }
+  }
+}

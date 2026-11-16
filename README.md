@@ -109,7 +109,10 @@ For Codex, unzip into `~/.codex/skills` instead. Checksums are in
 
 ## What's inside
 
-- **`freckle-mcp/.mcp.json`**: the Freckle MCP server connection.
+- **`freckle-mcp/.claude-plugin/mcp.json`**: the Claude Code MCP connection,
+  using automatic OAuth discovery.
+- **`freckle-mcp/.codex-plugin/mcp.json`**: the Codex/ChatGPT MCP connection,
+  including OpenAI's OAuth CIMD extension.
 - **`freckle-mcp/skills/`**: the `freckle` and `freckle-plan` skills. They add
   the GTM judgment the tool descriptions don't carry: confirm the cost before
   spending credits, sample 10 rows before a big run, report real outcomes.
