@@ -1,6 +1,6 @@
 ---
 name: freckle
-description: "Freckle is reached through the Freckle MCP tools; read this skill before any Freckle request. Use it to find companies or people, get work emails, phone numbers or company details, enrich or score leads or a CSV of accounts, import HubSpot or Salesforce records, push Datasets to LinkedIn, Meta or Google Ads audiences, manage Workbooks and Workflows with their Datasets and runs, monitor Signals for new hires, job openings or job changes, or check the signed-in account, credits and connections. Use it for these requests even when the user does not name Freckle."
+description: "How to work in Freckle through the Freckle MCP tools; read it before calling them. Use it when the user asks Freckle, or works with their Freckle Workbooks, Workflows, Datasets, Lists or Signals, to find companies or people, get work emails, phone numbers or company details, enrich or score leads or a CSV of accounts, import HubSpot or Salesforce records, push Datasets to LinkedIn, Meta or Google Ads audiences, run or change Workflows, monitor Signals for new hires, job openings or job changes, or check their Freckle account, credits and connections."
 ---
 
 # Freckle through MCP
@@ -15,6 +15,7 @@ Freckle runs GTM data work: find companies and people, fill emails, phones and c
 - Confirm before spending credits: a plan with its cost, then a yes. That yes covers the run: show the sample; if the full run was already approved within the quoted max, continue; ask again only if the cost or scope changed, and before switching a connection to automatic.
 - Building is free; build without asking. Over 100 rows, run a sample and show it before the full run, even when the user says to just run; at 100 or fewer, run without one unless the user asks.
 - Report real outcomes: rows saved in the Workbook, the cost the server reports, failures and gaps as they are. A queued run is not a finished one.
+- Delete or archive only the items the user names, each confirmed; never bulk-delete a Workspace's data. Deleting a Freckle account or Workspace is not available through these tools: say so and point the user to Freckle support.
 - Secrets go only through the browser form `connections_setup` returns, never into chat, arguments or workflow JSON. A Dataset webhook URL is a credential: share it only with the requester.
 - Talk to a GTM user: product words are fine; translate programming terms.
 

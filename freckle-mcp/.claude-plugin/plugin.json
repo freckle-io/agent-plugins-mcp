@@ -1,13 +1,16 @@
 {
   "name": "freckle-mcp",
-  "description": "Build lists, enrich leads, author workflows, import CRM data and sync Ads audiences through Freckle MCP. No Freckle CLI required.",
-  "version": "0.1.0",
+  "description": "Build company and people lists, enrich leads, author and run Workflows, import HubSpot and Salesforce records, monitor Signals and sync Ads audiences in Freckle, through Freckle's hosted MCP server.",
+  "version": "1.0.0",
   "author": {
-    "name": "Freckle"
+    "name": "Freckle",
+    "email": "support@freckle.io",
+    "url": "https://freckle.io"
   },
   "homepage": "https://freckle.io",
   "repository": "https://github.com/freckle-io/agent-plugins-mcp",
   "license": "MIT",
+  "keywords": ["freckle", "sales", "lead enrichment", "list building", "crm", "signals", "ads audiences"],
   "mcpServers": "./.mcp.json",
   "skills": "./skills/"
 }
