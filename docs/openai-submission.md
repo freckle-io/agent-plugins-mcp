@@ -11,7 +11,7 @@ The package is the Codex format:
 | File | Role |
 | --- | --- |
 | `freckle-mcp/.codex-plugin/plugin.json` | Identity, listing (`interface`), review cases and release notes (`extensions.com.openai`) |
-| `freckle-mcp/.mcp.json` | The one remote MCP server, `https://next-api.freckle.io/mcp/full`, with OAuth (CIMD) |
+| `freckle-mcp/.codex-plugin/mcp.json` | The one remote MCP server, `https://next-api.freckle.io/mcp/full`, with OAuth (CIMD) |
 | `freckle-mcp/skills/` | `freckle` (router plus LIST, BUILD, SIGNALS, ADS) and `freckle-plan` |
 | `freckle-mcp/assets/` | `freckle-light.png` and `freckle-dark.png`, both 520×520 |
 | `freckle-mcp/.claude-plugin/plugin.json` | Claude Code manifest; identity fields match the Codex manifest |
