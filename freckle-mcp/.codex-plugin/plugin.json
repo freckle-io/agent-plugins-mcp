@@ -1,6 +1,6 @@
 {
   "name": "freckle-mcp",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Build company and people lists, enrich leads, author and run Workflows, import HubSpot and Salesforce records, monitor Signals and sync Ads audiences in Freckle, through Freckle's hosted MCP server.",
   "author": {
     "name": "Freckle",

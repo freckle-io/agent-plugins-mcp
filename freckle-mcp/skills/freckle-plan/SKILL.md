@@ -1,6 +1,6 @@
 ---
 name: freckle-plan
-description: "Plan a Freckle build before anything is built: turn a sales call, transcript, meeting notes, a Slack thread or a loose idea the user wants built in Freckle into a build spec and plan. Use it when the user asks to build or set up something in Freckle."
+description: "Plan a Freckle build: turn a sales call, transcript, meeting notes, a Slack thread or a loose idea into a build spec and plan before anything is built. Use it for \"build this\" or \"set this up\" asks, even when Freckle is not named."
 ---
 
 # Plan a Freckle build
@@ -11,6 +11,7 @@ Turn the ask into a short plan before building anything. Write it even without t
 - Read what the plan needs, once: the ask and its files, the Workspace and credit balance, existing Workbooks, Workflows and rows, and the drafts of saved workflows you would reuse.
 - Capture every agreed point: must-haves, matching and dedupe rules, schedules, and warnings mentioned in passing. Each must-have becomes a step the build meets exactly.
 - Build only the current phase; later phases and undecided choices are questions. Every data point mentioned gets a column; when unsure, keep it and ask.
+- Check the requested scope against the inspected node contracts before proposing or saving it. If available nodes cannot express a must-have, say plainly which requirement is unsupported and ask about any alternative; save nothing that substitutes a different scope. For example, a node requiring company domains cannot fulfill a global job search without domains, and a local filter does not turn a company-scoped source into a global one.
 - ICP: keep the user's criteria in their words; a cheaper proxy is a question. A persona list mixing levels and functions means those levels in those functions. When people per company is unstated, ask and recommend 3.
 - Creating CRM records always takes two steps: match (any one identifier, domain or URL or company name, counts) and re-check the CRM right before each create; create only on no match.
 
@@ -19,6 +20,7 @@ Turn the ask into a short plan before building anything. Write it even without t
 - Recover missing identifiers first (a live domain, a LinkedIn URL) with their own waterfall, rejoin, then run later steps once for every row.
 - For the top N people, search each seniority level separately and fill slots from the top down, each slot with its own columns.
 - Reuse what exists: values the Dataset already has, saved workflows and waterfalls (connect them to the Dataset that holds their fields), and the user's Workbook. Treat given rows as real.
+- Match every saved Workflow `workflows_listWorkflows` returns against each stage of the objective, not just the first. When saved Workflows cover consecutive stages (email to LinkedIn URL, then LinkedIn URL to a profile with employer and role), the plan embeds them in order as steps of one new Workflow: name each, and build new steps only for what they leave out.
 
 ## Waterfalls
 - Ordered providers, each running only when the one before missed. Keep the user's order; otherwise the most accurate for the objective, cheapest among equals.
@@ -35,4 +37,4 @@ Turn the ask into a short plan before building anything. Write it even without t
 - Push to Dataset needs its destination Dataset in the same Workbook.
 
 ## Approve
-Present one message: the flow in plain words naming each reused workflow, the cost the server estimates against the balance, at most four questions each with a recommended answer, and one approval ask saying what approval starts. A reply that leaves choices to you approves your recommendations; a change request gets a revised plan and a new ask. Once approved, build with [BUILD.md](../freckle/BUILD.md) in the same turn, using only the providers the plan names.
+Present one message: the flow in plain words naming each reused workflow, the per-row credit cap the server estimates and its dollar value (at `workspace_context`'s `credits.creditPricing` rate (or `creditUsage_getCurrentCredits`'s `creditPricing`)) against the balance (when the estimate lists `usageBasedNodeCosts`, such as managed Apify, call it the known charges rather than a cap and say those nodes add metered credits after the run), at most four questions each with a recommended answer, and one approval ask saying what approval starts. Then end your turn: nothing is created, imported, connected or built before the reply. A reply that leaves choices to you approves your recommendations; a change request gets a revised plan and a new ask. Once approved, build with [BUILD.md](../freckle/BUILD.md) in the same turn, using only the providers the plan names.
