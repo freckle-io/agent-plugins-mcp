@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://freckle.io">freckle.io</a> · MCP server: <code>https://next-api.freckle.io/mcp/full</code>
+  <a href="https://freckle.io">freckle.io</a> · <a href="https://freckle-io.github.io/agent-plugins-mcp/">Docs</a> · MCP server: <code>https://next-api.freckle.io/mcp/full</code>
 </p>
 
 Freckle is an AI-powered lead enrichment platform: build lists of companies and
@@ -128,6 +128,15 @@ When changing skills, update both `freckle-mcp/skills/` and
 `claude/freckle-mcp/skills/` with identical files. Run
 `python3 scripts/audit_claude_directory.py` to check the submission file rules
 and detect skill drift; CI runs the same check.
+
+## Public docs site
+
+[`site/`](./site/) is the public MCP docs page, deployed to GitHub Pages by
+`.github/workflows/docs-site.yml` on every push to `main`. Edit
+`site/mcp.md`, then run `python3 scripts/build_site.py` to re-render
+`site/index.html` (CI fails if it's stale). To refresh the tool reference from
+the server, pass `--annotations` with `apps/http_api/src/FullMcp/Annotations.ts`
+from `freckle-io/next`; see the script's docstring.
 
 The plugin ships no binaries, hooks or secrets. Sign-in goes through your
 client's OAuth flow, and integration secrets go only through the browser form

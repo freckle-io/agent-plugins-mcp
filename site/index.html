@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Freckle MCP server · Docs</title>
+<meta name="description" content="Use Freckle from Claude, Codex, Cursor, VS Code or any other AI agent that speaks the Model Context Protocol. Build company and people lists, enrich and score leads, author and run Workflows, import CRM records, watch Signals and sync Ads audiences, all in plain language.">
+<meta property="og:title" content="Freckle MCP server">
+<meta property="og:description" content="Use Freckle from Claude, Codex, Cursor, VS Code or any other AI agent that speaks the Model Context Protocol. Build company and people lists, enrich and score leads, author and run Workflows, import CRM records, watch Signals and sync Ads audiences, all in plain language.">
+<meta property="og:image" content="freckle.png">
+<link rel="icon" href="freckle.png">
+<link rel="alternate" type="text/markdown" href="mcp.md">
+<style>
+:root { --fg:#16161a; --muted:#62626e; --bg:#fff; --soft:#f5f5f7; --line:#e4e4e9; --accent:#4b3df5;
+  --read:#e7f6ec; --read-fg:#17663a; --write:#eef0ff; --write-fg:#3a33b8; --spend:#fff3e0; --spend-fg:#8a4b00; }
+@media (prefers-color-scheme: dark) { :root { --fg:#ececf1; --muted:#a0a0ad; --bg:#111114; --soft:#1b1b20;
+  --line:#2c2c34; --accent:#9d95ff; --read:#12301e; --read-fg:#7ad79c; --write:#1e1f3d; --write-fg:#aaa4ff;
+  --spend:#33240e; --spend-fg:#f0b465; } }
+* { box-sizing:border-box }
+body { margin:0; font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--fg); background:var(--bg) }
+a { color:var(--accent) }
+header.top { border-bottom:1px solid var(--line); padding:14px 24px; display:flex; align-items:center; gap:12px }
+header.top img { height:28px; width:28px; border-radius:6px }
+header.top .spacer { flex:1 }
+header.top a { text-decoration:none; color:var(--muted); font-size:14px }
+.layout { display:grid; grid-template-columns:220px minmax(0,760px); gap:48px; max-width:1080px; margin:0 auto; padding:32px 24px 80px }
+nav.toc { position:sticky; top:24px; align-self:start; font-size:14px }
+nav.toc a { display:block; color:var(--muted); text-decoration:none; padding:3px 0 }
+nav.toc a:hover { color:var(--fg) }
+@media (max-width:860px) { .layout { grid-template-columns:1fr } nav.toc { position:static } }
+h1 { font-size:2.1rem; line-height:1.2; margin:0 0 12px }
+h2 { margin-top:48px; padding-top:8px; border-top:1px solid var(--line) }
+h3 { margin-top:28px }
+.anchor { margin-left:8px; color:var(--line); text-decoration:none; font-weight:400 }
+h2:hover .anchor, h3:hover .anchor { color:var(--muted) }
+code { font:0.88em ui-monospace,SFMono-Regular,Menlo,monospace; background:var(--soft); padding:1px 5px; border-radius:4px }
+.code { position:relative }
+pre { background:var(--soft); border:1px solid var(--line); border-radius:8px; padding:14px 16px; overflow:auto }
+pre code { background:none; padding:0 }
+.copy { position:absolute; top:8px; right:8px; font-size:12px; border:1px solid var(--line); background:var(--bg); color:var(--muted); border-radius:6px; padding:2px 8px; cursor:pointer }
+.muted { color:var(--muted) }
+details { border:1px solid var(--line); border-radius:8px; margin:10px 0; padding:0 14px }
+summary { cursor:pointer; padding:10px 0; font-weight:600 }
+.count { color:var(--muted); font-weight:400; margin-left:6px }
+table { width:100%; border-collapse:collapse; font-size:14px; margin-bottom:12px }
+th, td { text-align:left; padding:6px 8px; border-top:1px solid var(--line); vertical-align:top }
+th { color:var(--muted); font-weight:500 }
+td code { word-break:break-all }
+.badge { font-size:12px; padding:1px 8px; border-radius:999px; white-space:nowrap }
+.badge.read { background:var(--read); color:var(--read-fg) }
+.badge.write { background:var(--write); color:var(--write-fg) }
+.badge.spend { background:var(--spend); color:var(--spend-fg) }
+footer { border-top:1px solid var(--line); padding:20px 24px; text-align:center; color:var(--muted); font-size:14px }
+</style>
+</head>
+<body>
+<header class="top">
+  <a href="https://freckle.io"><img src="freckle.png" alt="Freckle"></a>
+  <strong>Freckle Docs</strong>
+  <span class="spacer"></span>
+  <a href="mcp.md">Markdown</a>
+  <a href="llms.txt">llms.txt</a>
+  <a href="https://github.com/freckle-io/agent-plugins-mcp">GitHub</a>
+  <a href="https://freckle.io">freckle.io</a>
+</header>
+<div class="layout">
+<nav class="toc"><a href="#set-up">Set up</a>
+<a href="#what-you-can-ask">What you can ask</a>
+<a href="#credits-and-safety">Credits and safety</a>
+<a href="#data-and-privacy">Data and privacy</a>
+<a href="#tools">Tools</a>
+<a href="#troubleshooting">Troubleshooting</a>
+<a href="#support">Support</a></nav>
+<main>
+<h1>Freckle MCP server</h1>
+<p>Use Freckle from Claude, Codex, Cursor, VS Code or any other AI agent that speaks the Model Context Protocol. Build company and people lists, enrich and score leads, author and run Workflows, import CRM records, watch Signals and sync Ads audiences, all in plain language.</p>
+<ul><li><strong>Server URL:</strong> <code>https://next-api.freckle.io/mcp/full</code></li><li><strong>Transport:</strong> Streamable HTTP</li><li><strong>Auth:</strong> OAuth. You sign in to Freckle in the browser and pick a Workspace.</li><li><strong>Who can use it:</strong> any member of a Freckle Workspace.</li></ul>
+<h2 id="set-up">Set up<a class="anchor" href="#set-up">#</a></h2>
+<h3 id="claude-code">Claude Code<a class="anchor" href="#claude-code">#</a></h3>
+<p>The plugin connects the server and adds Freckle's skills in one step:</p>
+<div class="code"><button class="copy" type="button">Copy</button><pre><code>/plugin marketplace add freckle-io/agent-plugins-mcp
+/plugin install freckle@freckle-mcp-plugins</code></pre></div>
+<p>Then run <code>/mcp</code>, pick <strong>freckle</strong> and sign in. Server only, without the skills:</p>
+<div class="code"><button class="copy" type="button">Copy</button><pre><code class="language-bash">claude mcp add --transport http freckle https://next-api.freckle.io/mcp/full</code></pre></div>
+<h3 id="claude-claude-ai-and-claude-desktop">Claude (claude.ai and Claude Desktop)<a class="anchor" href="#claude-claude-ai-and-claude-desktop">#</a></h3>
+<ol><li>Go to <strong>Settings → Connectors → Add custom connector</strong>.</li><li>Name it <code>Freckle</code>, paste <code>https://next-api.freckle.io/mcp/full</code>, then <strong>Connect</strong> and sign in to Freckle.</li><li>Optional: add the skills. Download <a href="https://github.com/freckle-io/agent-plugins-mcp/releases/download/skills-latest/freckle.zip"><code>freckle.zip</code></a> and <a href="https://github.com/freckle-io/agent-plugins-mcp/releases/download/skills-latest/freckle-plan.zip"><code>freckle-plan.zip</code></a> and upload each under <strong>Settings → Capabilities → Skills</strong>.</li></ol>
+<h3 id="codex">Codex<a class="anchor" href="#codex">#</a></h3>
+<div class="code"><button class="copy" type="button">Copy</button><pre><code class="language-bash">codex plugin marketplace add freckle-io/agent-plugins-mcp</code></pre></div>
+<p>Run <code>/plugins</code>, install <strong>Freckle</strong> and sign in. Server only:</p>
+<div class="code"><button class="copy" type="button">Copy</button><pre><code class="language-bash">codex mcp add freckle --url https://next-api.freckle.io/mcp/full</code></pre></div>
+<h3 id="cursor">Cursor<a class="anchor" href="#cursor">#</a></h3>
+<p><a href="cursor://anysphere.cursor-deeplink/mcp/install?name=freckle&amp;amp;config=eyJ1cmwiOiJodHRwczovL25leHQtYXBpLmZyZWNrbGUuaW8vbWNwL2Z1bGwifQ==">Add to Cursor</a>, or add this to <code>~/.cursor/mcp.json</code>:</p>
+<div class="code"><button class="copy" type="button">Copy</button><pre><code class="language-json">{
+  &quot;mcpServers&quot;: {
+    &quot;freckle&quot;: { &quot;url&quot;: &quot;https://next-api.freckle.io/mcp/full&quot; }
+  }
+}</code></pre></div>
+<h3 id="vs-code">VS Code<a class="anchor" href="#vs-code">#</a></h3>
+<p><a href="https://vscode.dev/redirect/mcp/install?name=freckle&amp;amp;config=%7B%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A//next-api.freckle.io/mcp/full%22%7D">Install in VS Code</a>, or add this to <code>.vscode/mcp.json</code>:</p>
+<div class="code"><button class="copy" type="button">Copy</button><pre><code class="language-json">{
+  &quot;servers&quot;: {
+    &quot;freckle&quot;: { &quot;type&quot;: &quot;http&quot;, &quot;url&quot;: &quot;https://next-api.freckle.io/mcp/full&quot; }
+  }
+}</code></pre></div>
+<h3 id="other-clients">Other clients<a class="anchor" href="#other-clients">#</a></h3>
+<p>Any client that supports remote (Streamable HTTP) MCP servers with OAuth can connect to <code>https://next-api.freckle.io/mcp/full</code>. For clients that only run local servers, bridge it with <code>npx -y mcp-remote https://next-api.freckle.io/mcp/full</code>.</p>
+<h2 id="what-you-can-ask">What you can ask<a class="anchor" href="#what-you-can-ask">#</a></h2>
+<ul><li>"Which Workspace am I in and how many credits do I have?"</li><li>"Preview VPs of Sales at US software companies with 50 to 500 employees. Don't build anything yet."</li><li>"Make a Workbook from these 20 domains and fill in industry, headcount and HQ country."</li><li>"Find work emails for everyone in my <em>Webinar attendees</em> Dataset. Run 10 rows first and show me."</li><li>"Import my HubSpot contacts in the <em>Customers</em> list every morning and enrich new ones."</li><li>"Watch these accounts for hiring and funding Signals."</li><li>"Sync the <em>High intent</em> Dataset to a LinkedIn matched audience."</li></ul>
+<h2 id="credits-and-safety">Credits and safety<a class="anchor" href="#credits-and-safety">#</a></h2>
+<ul><li><strong>Approval before spend.</strong> The server tells your agent to quote the maximum cost and get your yes before anything spends credits, to run a sample first when a job is over 100 rows, and to get your approval on a plan before it creates, imports, connects or builds anything.</li><li><strong>Labelled tools.</strong> Every tool carries MCP annotations (read-only, destructive, idempotent, open-world) so your client can auto-approve reads and ask before writes. The reference below shows which tools can spend credits.</li><li><strong>Secrets stay out of chat.</strong> API keys for integrations are entered in a Freckle browser form that <code>connections_setup</code> links to, never in tool arguments.</li><li><strong>One Workspace per session.</strong> The session uses the Workspace you picked at sign-in. Ask your agent to switch, and it changes only that session.</li></ul>
+<h2 id="data-and-privacy">Data and privacy<a class="anchor" href="#data-and-privacy">#</a></h2>
+<p>Freckle sees only what your agent sends to the tools and returns only data from your Workspace and the providers your Workflows call. Customer data is never used to train AI models. Freckle is SOC 2 Type II audited. <code>snapshot_createUpload</code> shares the current session transcript with the Freckle team for debugging or feedback. Its description tells agents to call it only when you ask, and it works only in clients with a local shell (Claude Code, Codex).</p>
+<p>See the <a href="https://freckle.io/privacy-policy">privacy policy</a> and <a href="https://freckle.io/terms-of-service">terms of service</a>. Data requests: <a href="mailto:privacy@freckle.io">privacy@freckle.io</a>. Security: <a href="mailto:security@freckle.io">security@freckle.io</a>.</p>
+<h2 id="tools">Tools<a class="anchor" href="#tools">#</a></h2>
+<p class="muted">143 tools, generated from the server's tool annotations.</p>
+<details id="tools-workspace"><summary>Workspace and connections <span class="count">7</span></summary>
+<table><thead><tr><th>Tool</th><th>What it does</th><th>Effect</th></tr></thead><tbody>
+<tr><td><code>integrationCredentials_list</code></td><td>List Connections</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>integrationCredentials_delete</code></td><td>Delete Connection</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>connections_setup</code></td><td>Set Up Connection</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workspace_context</code></td><td>Get Workspace Context</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workspace_select</code></td><td>Switch Workspace</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>workspace_updateWorkspaceTimeZone</code></td><td>Set Workspace Time Zone</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>snapshot_createUpload</code></td><td>Share Session Transcript With Freckle</td><td><span class="badge write">Free write</span></td></tr>
+</tbody></table></details>
+<details id="tools-credits"><summary>Credits <span class="count">6</span></summary>
+<table><thead><tr><th>Tool</th><th>What it does</th><th>Effect</th></tr></thead><tbody>
+<tr><td><code>creditUsage_getCurrentCredits</code></td><td>Get Credit Balance</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>creditUsage_getUsageByDay</code></td><td>Get Credit Usage by Day</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>creditUsage_getUsageByWorkbook</code></td><td>Get Credit Usage by Workbook</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>creditUsage_getUsageByWorkflow</code></td><td>Get Credit Usage by Workflow</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>creditUsage_getUsageByNodeInWorkbook</code></td><td>Get Workbook Credit Usage by Node</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>creditUsage_getUsageByNodeInWorkflow</code></td><td>Get Workflow Credit Usage by Node</td><td><span class="badge read">Read only</span></td></tr>
+</tbody></table></details>
+<details id="tools-workbooks"><summary>Workbooks <span class="count">9</span></summary>
+<table><thead><tr><th>Tool</th><th>What it does</th><th>Effect</th></tr></thead><tbody>
+<tr><td><code>workbooks_createWorkbook</code></td><td>Create Workbook</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>workbooks_listWorkbooks</code></td><td>List Workbooks</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workbooks_getWorkbook</code></td><td>Get Workbook</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workbooks_getWorkbookStats</code></td><td>Get Workbook Stats</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workbooks_subscribeToWorkbookRunCompletion</code></td><td>Email When Workbook Runs Finish</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>workbooks_unsubscribeFromWorkbookRunCompletion</code></td><td>Cancel Workbook Run Email</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>workbooks_updateWorkbook</code></td><td>Update Workbook</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>workbooks_archiveWorkbook</code></td><td>Archive Workbook</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>workbooks_unarchiveWorkbook</code></td><td>Unarchive Workbook</td><td><span class="badge spend">May spend credits</span></td></tr>
+</tbody></table></details>
+<details id="tools-datasets"><summary>Datasets <span class="count">33</span></summary>
+<table><thead><tr><th>Tool</th><th>What it does</th><th>Effect</th></tr></thead><tbody>
+<tr><td><code>datasets_createWorkbookDataset</code></td><td>Create Dataset</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>datasets_listWorkbookDatasets</code></td><td>List Workbook Datasets</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>datasets_listDatasets</code></td><td>List Datasets</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>datasets_getDataset</code></td><td>Get Dataset</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>datasets_updateDataset</code></td><td>Update Dataset</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>datasets_archiveDataset</code></td><td>Archive Dataset</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>datasets_deleteDataset</code></td><td>Delete Dataset</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>datasets_createDatasetEntry</code></td><td>Add Dataset Entry</td><td><span class="badge spend">May spend credits</span></td></tr>
+<tr><td><code>datasets_importDatasetCsv</code></td><td>Import CSV Rows</td><td><span class="badge spend">May spend credits</span></td></tr>
+<tr><td><code>datasets_createDatasetCsvImport</code></td><td>Create CSV Import</td><td><span class="badge write">Enables later spend</span></td></tr>
+<tr><td><code>datasets_completeDatasetCsvImport</code></td><td>Queue CSV Import</td><td><span class="badge spend">May spend credits</span></td></tr>
+<tr><td><code>datasets_createDatasetWebhookSource</code></td><td>Create Webhook Source</td><td><span class="badge write">Enables later spend</span></td></tr>
+<tr><td><code>datasets_rotateDatasetWebhookSourceSecret</code></td><td>Rotate Webhook Secret</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>datasets_getDatasetSource</code></td><td>Get Dataset Source</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>datasets_listDatasetSources</code></td><td>List Dataset Sources</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>datasets_listDatasetEntries</code></td><td>List Dataset Entries</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>datasets_getDatasetEntryGridWindow</code></td><td>Get Dataset Grid Rows</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>datasets_getDatasetEntryCount</code></td><td>Count Dataset Entries</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>datasets_updateDatasetEntry</code></td><td>Update Dataset Entry</td><td><span class="badge spend">May spend credits</span></td></tr>
+<tr><td><code>datasets_deleteDatasetEntries</code></td><td>Delete Dataset Entries</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>datasets_replaceDatasetFieldCatalog</code></td><td>Replace Dataset Fields</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>datasets_createWorkflowDatasetConnection</code></td><td>Connect Workflow to Dataset</td><td><span class="badge write">Enables later spend</span></td></tr>
+<tr><td><code>datasets_getWorkflowDatasetConnection</code></td><td>Get Connection</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>datasets_triggerWorkflowDatasetConnection</code></td><td>Run Pending Entries</td><td><span class="badge spend">May spend credits</span></td></tr>
+<tr><td><code>datasets_rerunFailedWorkflowDatasetConnection</code></td><td>Rerun Failed Entries</td><td><span class="badge spend">May spend credits</span></td></tr>
+<tr><td><code>datasets_runWorkflowDatasetConnectionEntries</code></td><td>Run Selected Entries</td><td><span class="badge spend">May spend credits</span></td></tr>
+<tr><td><code>datasets_updateWorkflowDatasetConnectionTriggerPolicy</code></td><td>Set Connection Trigger Policy</td><td><span class="badge write">Enables later spend</span></td></tr>
+<tr><td><code>datasets_updateWorkflowDatasetConnectionRerunPolicy</code></td><td>Set Connection Rerun Policy</td><td><span class="badge write">Enables later spend</span></td></tr>
+<tr><td><code>datasets_archiveWorkflowDatasetConnection</code></td><td>Archive Connection</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>datasets_listWorkflowDatasetConnectionRuns</code></td><td>List Connection Runs</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>datasets_createCsvUploadUrl</code></td><td>Create CSV Upload URL</td><td><span class="badge write">Enables later spend</span></td></tr>
+<tr><td><code>datasets_waitForCsvImport</code></td><td>Import Uploaded CSV and Wait</td><td><span class="badge spend">May spend credits</span></td></tr>
+<tr><td><code>datasets_addCatalogFields</code></td><td>Add Dataset Fields</td><td><span class="badge write">Free write</span></td></tr>
+</tbody></table></details>
+<details id="tools-lists"><summary>List building <span class="count">8</span></summary>
+<table><thead><tr><th>Tool</th><th>What it does</th><th>Effect</th></tr></thead><tbody>
+<tr><td><code>listBuilds_createAIArkCompanies</code></td><td>Create AI Ark Company List</td><td><span class="badge spend">May spend credits</span></td></tr>
+<tr><td><code>listBuilds_createAIArkPeople</code></td><td>Create AI Ark People List</td><td><span class="badge spend">May spend credits</span></td></tr>
+<tr><td><code>listBuilds_createCompanies</code></td><td>Create Apollo Company List</td><td><span class="badge spend">May spend credits</span></td></tr>
+<tr><td><code>listBuilds_createPeople</code></td><td>Create Apollo People List</td><td><span class="badge spend">May spend credits</span></td></tr>
+<tr><td><code>listBuilds_run</code></td><td>Run List Import</td><td><span class="badge spend">May spend credits</span></td></tr>
+<tr><td><code>listBuilds_get</code></td><td>Get List Progress</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>listBuilds_getFilterValues</code></td><td>List Filter Values</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>listBuilds_getAIArkFilters</code></td><td>Get AI Ark Filter Fields</td><td><span class="badge read">Read only</span></td></tr>
+</tbody></table></details>
+<details id="tools-workflows"><summary>Workflows and enrichment <span class="count">24</span></summary>
+<table><thead><tr><th>Tool</th><th>What it does</th><th>Effect</th></tr></thead><tbody>
+<tr><td><code>workflowDrafts_compileWorkflowDraft</code></td><td>Validate Workflow Draft</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workflowDrafts_getDraftSyntax</code></td><td>Get Draft Syntax</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workflowDrafts_initDraft</code></td><td>Start Workflow Draft</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workflowNodes_listWorkflowNodes</code></td><td>List Workflow Nodes</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workflowNodes_getWorkflowNode</code></td><td>Get Workflow Node</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workflowNodes_getWorkflowNodes</code></td><td>Get Workflow Nodes</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workflowNodes_previewWorkflowNode</code></td><td>Preview Workflow Node</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workflows_createWorkflow</code></td><td>Create Workflow</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>workflows_listWorkflows</code></td><td>List Workflows</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workflows_listWorkflowNodes</code></td><td>List Nodes in Workflow</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workflows_archiveWorkflow</code></td><td>Archive Workflow</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>workflows_unarchiveWorkflow</code></td><td>Unarchive Workflow</td><td><span class="badge write">Enables later spend</span></td></tr>
+<tr><td><code>workflows_getWorkflow</code></td><td>Get Workflow</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workflows_updateWorkflow</code></td><td>Update Workflow</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>workflows_updateWorkflowSettings</code></td><td>Update Workflow Settings</td><td><span class="badge write">Enables later spend</span></td></tr>
+<tr><td><code>workflows_saveWorkflowRevision</code></td><td>Save Workflow Revision</td><td><span class="badge write">Enables later spend</span></td></tr>
+<tr><td><code>workflows_listWorkflowRevisions</code></td><td>List Workflow Revisions</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workflows_getWorkflowRevision</code></td><td>Get Workflow Revision</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workflows_getPinnedWorkflowRevision</code></td><td>Get Pinned Workflow Revision</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workflows_getLatestWorkflowSchema</code></td><td>Get Workflow Schema</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workflows_getWorkflowRevisionSchema</code></td><td>Get Revision Schema</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workflows_listAcrossWorkspaces</code></td><td>List Workflows in All Workspaces</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workflows_buildWorkflow</code></td><td>Build Workflow</td><td><span class="badge spend">May spend credits</span></td></tr>
+<tr><td><code>workflows_createDraftUploadUrl</code></td><td>Create Draft Upload URL</td><td><span class="badge spend">May spend credits</span></td></tr>
+</tbody></table></details>
+<details id="tools-runs"><summary>Workflow runs <span class="count">13</span></summary>
+<table><thead><tr><th>Tool</th><th>What it does</th><th>Effect</th></tr></thead><tbody>
+<tr><td><code>workflowRuns_listWorkflowRuns</code></td><td>List Workflow Runs</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workflowRuns_listWorkflowRunData</code></td><td>List Workflow Run Data</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workflowRuns_getWorkflowRunStats</code></td><td>Get Workflow Run Stats</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workflowRuns_searchWorkflowRuns</code></td><td>Search Workflow Runs</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workflowRuns_startWorkflowRun</code></td><td>Start Workflow Run</td><td><span class="badge spend">May spend credits</span></td></tr>
+<tr><td><code>workflowRuns_getWorkflowRunData</code></td><td>Get Workflow Run Data</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workflowRuns_listWorkflowNodeRuns</code></td><td>List Node Runs</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workflowRuns_getWorkflowRunView</code></td><td>Get Workflow Run</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workflowRuns_getWorkflowRunParent</code></td><td>Get Parent Workflow Run</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>workflowRuns_cancelWorkflowRuns</code></td><td>Cancel Workflow Runs</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>workflowRuns_cancelAllWorkflowRuns</code></td><td>Cancel All Workflow Runs</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>workflowRuns_cancelAllWorkbookRuns</code></td><td>Cancel All Workbook Runs</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>workflowRuns_wait</code></td><td>Wait for Runs</td><td><span class="badge read">Read only</span></td></tr>
+</tbody></table></details>
+<details id="tools-imports"><summary>CRM and warehouse imports <span class="count">26</span></summary>
+<table><thead><tr><th>Tool</th><th>What it does</th><th>Effect</th></tr></thead><tbody>
+<tr><td><code>hubspotDatasetSources_create</code></td><td>Import from HubSpot</td><td><span class="badge write">Starts work, free</span></td></tr>
+<tr><td><code>hubspotDatasetSources_setSchedule</code></td><td>Set HubSpot Import Schedule</td><td><span class="badge write">Enables later spend</span></td></tr>
+<tr><td><code>hubspotDatasetSources_deleteSchedule</code></td><td>Delete HubSpot Import Schedule</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>hubspotDatasetSources_pauseSchedule</code></td><td>Pause HubSpot Import Schedule</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>hubspotDatasetSources_resumeSchedule</code></td><td>Resume HubSpot Import Schedule</td><td><span class="badge spend">May spend credits</span></td></tr>
+<tr><td><code>hubspotDatasetSources_setCheckpoint</code></td><td>Set HubSpot Import Checkpoint</td><td><span class="badge write">Enables later spend</span></td></tr>
+<tr><td><code>hubspotDatasetSources_get</code></td><td>Get HubSpot Source</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>hubspotDatasetSources_fetchNextBatch</code></td><td>Import Next HubSpot Batch</td><td><span class="badge spend">May spend credits</span></td></tr>
+<tr><td><code>salesforceDatasetSources_previewSoql</code></td><td>Preview Salesforce SOQL</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>salesforceDatasetSources_create</code></td><td>Import from Salesforce</td><td><span class="badge write">Starts work, free</span></td></tr>
+<tr><td><code>salesforceDatasetSources_get</code></td><td>Get Salesforce Source</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>salesforceDatasetSources_fetchNextBatch</code></td><td>Import Next Salesforce Batch</td><td><span class="badge spend">May spend credits</span></td></tr>
+<tr><td><code>salesforceDatasetSources_setSchedule</code></td><td>Set Salesforce Import Schedule</td><td><span class="badge write">Enables later spend</span></td></tr>
+<tr><td><code>salesforceDatasetSources_deleteSchedule</code></td><td>Delete Salesforce Import Schedule</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>salesforceDatasetSources_objects</code></td><td>List Salesforce Objects</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>salesforceDatasetSources_fields</code></td><td>List Salesforce Fields</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>salesforceDatasetSources_listViews</code></td><td>List Salesforce List Views</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>attioDatasetSources_create</code></td><td>Import from Attio</td><td><span class="badge write">Starts work, free</span></td></tr>
+<tr><td><code>attioDatasetSources_get</code></td><td>Get Attio Source</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>attioDatasetSources_sync</code></td><td>Sync Attio Source</td><td><span class="badge spend">May spend credits</span></td></tr>
+<tr><td><code>attioDatasetSources_setSchedule</code></td><td>Set Attio Import Schedule</td><td><span class="badge write">Enables later spend</span></td></tr>
+<tr><td><code>attioDatasetSources_deleteSchedule</code></td><td>Delete Attio Import Schedule</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>attioDatasetSources_objects</code></td><td>List Attio Objects</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>attioDatasetSources_attributes</code></td><td>List Attio Attributes</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>snowflakeDatasetSources_previewQuery</code></td><td>Preview Snowflake Query</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>snowflakeDatasetSources_createImport</code></td><td>Import from Snowflake</td><td><span class="badge spend">May spend credits</span></td></tr>
+</tbody></table></details>
+<details id="tools-signals"><summary>Signals <span class="count">11</span></summary>
+<table><thead><tr><th>Tool</th><th>What it does</th><th>Effect</th></tr></thead><tbody>
+<tr><td><code>signals_listSignalTypes</code></td><td>List Signal Types</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>signals_createSignalProviderConfiguration</code></td><td>Create Signal</td><td><span class="badge spend">May spend credits</span></td></tr>
+<tr><td><code>signals_listSignalProviderConfigurationMonitorStatuses</code></td><td>List Signal Monitor Statuses</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>signals_listSignalProviderConfigurations</code></td><td>List Dataset Signals</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>signals_listActiveSignalProviderConfigurations</code></td><td>List Active Signals</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>signals_getSignalProviderConfiguration</code></td><td>Get Signal</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>signals_pauseSignalProviderConfiguration</code></td><td>Pause Signal</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>signals_reactivateSignalProviderConfiguration</code></td><td>Reactivate Signal</td><td><span class="badge spend">May spend credits</span></td></tr>
+<tr><td><code>signals_retrySignalProviderConfiguration</code></td><td>Retry Signal Monitors</td><td><span class="badge spend">May spend credits</span></td></tr>
+<tr><td><code>signals_deleteSignalProviderConfiguration</code></td><td>Delete Signal</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>signals_listByWorkbook</code></td><td>List Workbook Signals</td><td><span class="badge read">Read only</span></td></tr>
+</tbody></table></details>
+<details id="tools-ads"><summary>Ads audiences <span class="count">6</span></summary>
+<table><thead><tr><th>Tool</th><th>What it does</th><th>Effect</th></tr></thead><tbody>
+<tr><td><code>adAudienceSyncs_createAdAudienceSync</code></td><td>Create Ad Audience Sync</td><td><span class="badge write">Starts work, free</span></td></tr>
+<tr><td><code>adAudienceSyncs_listAdAudienceSyncs</code></td><td>List Ad Audience Syncs</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>adAudienceSyncs_getAdAudienceSync</code></td><td>Get Ad Audience Sync</td><td><span class="badge read">Read only</span></td></tr>
+<tr><td><code>adAudienceSyncs_updateAdAudienceSync</code></td><td>Update Ad Audience Sync</td><td><span class="badge write">Free write</span></td></tr>
+<tr><td><code>adAudienceSyncs_runAdAudienceSync</code></td><td>Run Ad Audience Sync</td><td><span class="badge write">Starts work, free</span></td></tr>
+<tr><td><code>adAudienceSyncs_deleteAdAudienceSync</code></td><td>Delete Ad Audience Sync</td><td><span class="badge write">Free write</span></td></tr>
+</tbody></table></details>
+<h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting">#</a></h2>
+<p><strong>Sign-in loops or the server shows as disconnected.</strong> Remove the connection and add it again, or run <code>/mcp</code> in Claude Code and pick <strong>Re-authenticate</strong>.</p>
+<p><strong>My agent is in the wrong Workspace.</strong> Ask it to "switch Freckle Workspace"; it lists the Workspaces you belong to and switches this session.</p>
+<p><strong>Tools are missing.</strong> Check that the URL ends in <code>/mcp/full</code>. Some clients cap the number of tools; turn off tool groups you don't need.</p>
+<p><strong>A run spent more than I expected.</strong> Ask your agent for "my Freckle credit usage today" to see it itemised in chat, or check usage in the Freckle app.</p>
+<h2 id="support">Support<a class="anchor" href="#support">#</a></h2>
+<p>Email <a href="mailto:support@freckle.io">support@freckle.io</a> or open an issue at <a href="https://github.com/freckle-io/agent-plugins-mcp/issues">freckle-io/agent-plugins-mcp</a>.</p>
+</main>
+</div>
+<footer>
+  <a href="https://freckle.io">Freckle</a> ·
+  <a href="https://freckle.io/privacy-policy">Privacy policy</a> ·
+  <a href="https://freckle.io/terms-of-service">Terms of service</a> ·
+  <a href="mailto:support@freckle.io">support@freckle.io</a>
+</footer>
+<script>
+document.querySelectorAll('.copy').forEach(b => b.addEventListener('click', () => {
+  navigator.clipboard.writeText(b.nextElementSibling.innerText).then(() => {
+    b.textContent = 'Copied'; setTimeout(() => (b.textContent = 'Copy'), 1500)
+  })
+}))
+if (location.hash.startsWith('#tools-')) document.querySelector(location.hash)?.setAttribute('open', '')
+</script>
+</body>
+</html>

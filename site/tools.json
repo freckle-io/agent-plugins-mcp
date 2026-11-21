@@ -1,0 +1,717 @@
+[
+  {
+    "name": "workbooks_createWorkbook",
+    "title": "Create Workbook",
+    "cost": "free"
+  },
+  {
+    "name": "workbooks_listWorkbooks",
+    "title": "List Workbooks",
+    "cost": ""
+  },
+  {
+    "name": "workbooks_getWorkbook",
+    "title": "Get Workbook",
+    "cost": ""
+  },
+  {
+    "name": "workbooks_getWorkbookStats",
+    "title": "Get Workbook Stats",
+    "cost": ""
+  },
+  {
+    "name": "workbooks_subscribeToWorkbookRunCompletion",
+    "title": "Email When Workbook Runs Finish",
+    "cost": "free"
+  },
+  {
+    "name": "workbooks_unsubscribeFromWorkbookRunCompletion",
+    "title": "Cancel Workbook Run Email",
+    "cost": "free"
+  },
+  {
+    "name": "workbooks_updateWorkbook",
+    "title": "Update Workbook",
+    "cost": "free"
+  },
+  {
+    "name": "workbooks_archiveWorkbook",
+    "title": "Archive Workbook",
+    "cost": "free"
+  },
+  {
+    "name": "workbooks_unarchiveWorkbook",
+    "title": "Unarchive Workbook",
+    "cost": "spend"
+  },
+  {
+    "name": "datasets_createWorkbookDataset",
+    "title": "Create Dataset",
+    "cost": "free"
+  },
+  {
+    "name": "datasets_listWorkbookDatasets",
+    "title": "List Workbook Datasets",
+    "cost": ""
+  },
+  {
+    "name": "datasets_listDatasets",
+    "title": "List Datasets",
+    "cost": ""
+  },
+  {
+    "name": "datasets_getDataset",
+    "title": "Get Dataset",
+    "cost": ""
+  },
+  {
+    "name": "datasets_updateDataset",
+    "title": "Update Dataset",
+    "cost": "free"
+  },
+  {
+    "name": "datasets_archiveDataset",
+    "title": "Archive Dataset",
+    "cost": "free"
+  },
+  {
+    "name": "datasets_deleteDataset",
+    "title": "Delete Dataset",
+    "cost": "free"
+  },
+  {
+    "name": "datasets_createDatasetEntry",
+    "title": "Add Dataset Entry",
+    "cost": "spend"
+  },
+  {
+    "name": "datasets_importDatasetCsv",
+    "title": "Import CSV Rows",
+    "cost": "spend"
+  },
+  {
+    "name": "datasets_createDatasetCsvImport",
+    "title": "Create CSV Import",
+    "cost": "later"
+  },
+  {
+    "name": "datasets_completeDatasetCsvImport",
+    "title": "Queue CSV Import",
+    "cost": "spend"
+  },
+  {
+    "name": "datasets_createDatasetWebhookSource",
+    "title": "Create Webhook Source",
+    "cost": "later"
+  },
+  {
+    "name": "datasets_rotateDatasetWebhookSourceSecret",
+    "title": "Rotate Webhook Secret",
+    "cost": "free"
+  },
+  {
+    "name": "datasets_getDatasetSource",
+    "title": "Get Dataset Source",
+    "cost": ""
+  },
+  {
+    "name": "datasets_listDatasetSources",
+    "title": "List Dataset Sources",
+    "cost": ""
+  },
+  {
+    "name": "datasets_listDatasetEntries",
+    "title": "List Dataset Entries",
+    "cost": ""
+  },
+  {
+    "name": "datasets_getDatasetEntryGridWindow",
+    "title": "Get Dataset Grid Rows",
+    "cost": ""
+  },
+  {
+    "name": "datasets_getDatasetEntryCount",
+    "title": "Count Dataset Entries",
+    "cost": ""
+  },
+  {
+    "name": "datasets_updateDatasetEntry",
+    "title": "Update Dataset Entry",
+    "cost": "spend"
+  },
+  {
+    "name": "datasets_deleteDatasetEntries",
+    "title": "Delete Dataset Entries",
+    "cost": "free"
+  },
+  {
+    "name": "datasets_replaceDatasetFieldCatalog",
+    "title": "Replace Dataset Fields",
+    "cost": "free"
+  },
+  {
+    "name": "datasets_createWorkflowDatasetConnection",
+    "title": "Connect Workflow to Dataset",
+    "cost": "later"
+  },
+  {
+    "name": "datasets_getWorkflowDatasetConnection",
+    "title": "Get Connection",
+    "cost": ""
+  },
+  {
+    "name": "datasets_triggerWorkflowDatasetConnection",
+    "title": "Run Pending Entries",
+    "cost": "spend"
+  },
+  {
+    "name": "datasets_rerunFailedWorkflowDatasetConnection",
+    "title": "Rerun Failed Entries",
+    "cost": "spend"
+  },
+  {
+    "name": "datasets_runWorkflowDatasetConnectionEntries",
+    "title": "Run Selected Entries",
+    "cost": "spend"
+  },
+  {
+    "name": "datasets_updateWorkflowDatasetConnectionTriggerPolicy",
+    "title": "Set Connection Trigger Policy",
+    "cost": "later"
+  },
+  {
+    "name": "datasets_updateWorkflowDatasetConnectionRerunPolicy",
+    "title": "Set Connection Rerun Policy",
+    "cost": "later"
+  },
+  {
+    "name": "datasets_archiveWorkflowDatasetConnection",
+    "title": "Archive Connection",
+    "cost": "free"
+  },
+  {
+    "name": "datasets_listWorkflowDatasetConnectionRuns",
+    "title": "List Connection Runs",
+    "cost": ""
+  },
+  {
+    "name": "datasets_createCsvUploadUrl",
+    "title": "Create CSV Upload URL",
+    "cost": "later"
+  },
+  {
+    "name": "datasets_waitForCsvImport",
+    "title": "Import Uploaded CSV and Wait",
+    "cost": "spend"
+  },
+  {
+    "name": "datasets_addCatalogFields",
+    "title": "Add Dataset Fields",
+    "cost": "free"
+  },
+  {
+    "name": "listBuilds_createAIArkCompanies",
+    "title": "Create AI Ark Company List",
+    "cost": "spend"
+  },
+  {
+    "name": "listBuilds_createAIArkPeople",
+    "title": "Create AI Ark People List",
+    "cost": "spend"
+  },
+  {
+    "name": "listBuilds_createCompanies",
+    "title": "Create Apollo Company List",
+    "cost": "spend"
+  },
+  {
+    "name": "listBuilds_createPeople",
+    "title": "Create Apollo People List",
+    "cost": "spend"
+  },
+  {
+    "name": "listBuilds_run",
+    "title": "Run List Import",
+    "cost": "spend"
+  },
+  {
+    "name": "listBuilds_get",
+    "title": "Get List Progress",
+    "cost": ""
+  },
+  {
+    "name": "listBuilds_getFilterValues",
+    "title": "List Filter Values",
+    "cost": ""
+  },
+  {
+    "name": "listBuilds_getAIArkFilters",
+    "title": "Get AI Ark Filter Fields",
+    "cost": ""
+  },
+  {
+    "name": "workflowDrafts_compileWorkflowDraft",
+    "title": "Validate Workflow Draft",
+    "cost": ""
+  },
+  {
+    "name": "workflowDrafts_getDraftSyntax",
+    "title": "Get Draft Syntax",
+    "cost": ""
+  },
+  {
+    "name": "workflowDrafts_initDraft",
+    "title": "Start Workflow Draft",
+    "cost": ""
+  },
+  {
+    "name": "workflowNodes_listWorkflowNodes",
+    "title": "List Workflow Nodes",
+    "cost": ""
+  },
+  {
+    "name": "workflowNodes_getWorkflowNode",
+    "title": "Get Workflow Node",
+    "cost": ""
+  },
+  {
+    "name": "workflowNodes_getWorkflowNodes",
+    "title": "Get Workflow Nodes",
+    "cost": ""
+  },
+  {
+    "name": "workflowNodes_previewWorkflowNode",
+    "title": "Preview Workflow Node",
+    "cost": ""
+  },
+  {
+    "name": "workflows_createWorkflow",
+    "title": "Create Workflow",
+    "cost": "free"
+  },
+  {
+    "name": "workflows_listWorkflows",
+    "title": "List Workflows",
+    "cost": ""
+  },
+  {
+    "name": "workflows_listWorkflowNodes",
+    "title": "List Nodes in Workflow",
+    "cost": ""
+  },
+  {
+    "name": "workflows_archiveWorkflow",
+    "title": "Archive Workflow",
+    "cost": "free"
+  },
+  {
+    "name": "workflows_unarchiveWorkflow",
+    "title": "Unarchive Workflow",
+    "cost": "later"
+  },
+  {
+    "name": "workflows_getWorkflow",
+    "title": "Get Workflow",
+    "cost": ""
+  },
+  {
+    "name": "workflows_updateWorkflow",
+    "title": "Update Workflow",
+    "cost": "free"
+  },
+  {
+    "name": "workflows_updateWorkflowSettings",
+    "title": "Update Workflow Settings",
+    "cost": "later"
+  },
+  {
+    "name": "workflows_saveWorkflowRevision",
+    "title": "Save Workflow Revision",
+    "cost": "later"
+  },
+  {
+    "name": "workflows_listWorkflowRevisions",
+    "title": "List Workflow Revisions",
+    "cost": ""
+  },
+  {
+    "name": "workflows_getWorkflowRevision",
+    "title": "Get Workflow Revision",
+    "cost": ""
+  },
+  {
+    "name": "workflows_getPinnedWorkflowRevision",
+    "title": "Get Pinned Workflow Revision",
+    "cost": ""
+  },
+  {
+    "name": "workflows_getLatestWorkflowSchema",
+    "title": "Get Workflow Schema",
+    "cost": ""
+  },
+  {
+    "name": "workflows_getWorkflowRevisionSchema",
+    "title": "Get Revision Schema",
+    "cost": ""
+  },
+  {
+    "name": "workflows_listAcrossWorkspaces",
+    "title": "List Workflows in All Workspaces",
+    "cost": ""
+  },
+  {
+    "name": "workflows_buildWorkflow",
+    "title": "Build Workflow",
+    "cost": "spend"
+  },
+  {
+    "name": "workflows_createDraftUploadUrl",
+    "title": "Create Draft Upload URL",
+    "cost": "spend"
+  },
+  {
+    "name": "workflowRuns_listWorkflowRuns",
+    "title": "List Workflow Runs",
+    "cost": ""
+  },
+  {
+    "name": "workflowRuns_listWorkflowRunData",
+    "title": "List Workflow Run Data",
+    "cost": ""
+  },
+  {
+    "name": "workflowRuns_getWorkflowRunStats",
+    "title": "Get Workflow Run Stats",
+    "cost": ""
+  },
+  {
+    "name": "workflowRuns_searchWorkflowRuns",
+    "title": "Search Workflow Runs",
+    "cost": ""
+  },
+  {
+    "name": "workflowRuns_startWorkflowRun",
+    "title": "Start Workflow Run",
+    "cost": "spend"
+  },
+  {
+    "name": "workflowRuns_getWorkflowRunData",
+    "title": "Get Workflow Run Data",
+    "cost": ""
+  },
+  {
+    "name": "workflowRuns_listWorkflowNodeRuns",
+    "title": "List Node Runs",
+    "cost": ""
+  },
+  {
+    "name": "workflowRuns_getWorkflowRunView",
+    "title": "Get Workflow Run",
+    "cost": ""
+  },
+  {
+    "name": "workflowRuns_getWorkflowRunParent",
+    "title": "Get Parent Workflow Run",
+    "cost": ""
+  },
+  {
+    "name": "workflowRuns_cancelWorkflowRuns",
+    "title": "Cancel Workflow Runs",
+    "cost": "free"
+  },
+  {
+    "name": "workflowRuns_cancelAllWorkflowRuns",
+    "title": "Cancel All Workflow Runs",
+    "cost": "free"
+  },
+  {
+    "name": "workflowRuns_cancelAllWorkbookRuns",
+    "title": "Cancel All Workbook Runs",
+    "cost": "free"
+  },
+  {
+    "name": "workflowRuns_wait",
+    "title": "Wait for Runs",
+    "cost": ""
+  },
+  {
+    "name": "hubspotDatasetSources_create",
+    "title": "Import from HubSpot",
+    "cost": "freeStart"
+  },
+  {
+    "name": "hubspotDatasetSources_setSchedule",
+    "title": "Set HubSpot Import Schedule",
+    "cost": "later"
+  },
+  {
+    "name": "hubspotDatasetSources_deleteSchedule",
+    "title": "Delete HubSpot Import Schedule",
+    "cost": "free"
+  },
+  {
+    "name": "hubspotDatasetSources_pauseSchedule",
+    "title": "Pause HubSpot Import Schedule",
+    "cost": "free"
+  },
+  {
+    "name": "hubspotDatasetSources_resumeSchedule",
+    "title": "Resume HubSpot Import Schedule",
+    "cost": "spend"
+  },
+  {
+    "name": "hubspotDatasetSources_setCheckpoint",
+    "title": "Set HubSpot Import Checkpoint",
+    "cost": "later"
+  },
+  {
+    "name": "hubspotDatasetSources_get",
+    "title": "Get HubSpot Source",
+    "cost": ""
+  },
+  {
+    "name": "hubspotDatasetSources_fetchNextBatch",
+    "title": "Import Next HubSpot Batch",
+    "cost": "spend"
+  },
+  {
+    "name": "salesforceDatasetSources_previewSoql",
+    "title": "Preview Salesforce SOQL",
+    "cost": ""
+  },
+  {
+    "name": "salesforceDatasetSources_create",
+    "title": "Import from Salesforce",
+    "cost": "freeStart"
+  },
+  {
+    "name": "salesforceDatasetSources_get",
+    "title": "Get Salesforce Source",
+    "cost": ""
+  },
+  {
+    "name": "salesforceDatasetSources_fetchNextBatch",
+    "title": "Import Next Salesforce Batch",
+    "cost": "spend"
+  },
+  {
+    "name": "salesforceDatasetSources_setSchedule",
+    "title": "Set Salesforce Import Schedule",
+    "cost": "later"
+  },
+  {
+    "name": "salesforceDatasetSources_deleteSchedule",
+    "title": "Delete Salesforce Import Schedule",
+    "cost": "free"
+  },
+  {
+    "name": "salesforceDatasetSources_objects",
+    "title": "List Salesforce Objects",
+    "cost": ""
+  },
+  {
+    "name": "salesforceDatasetSources_fields",
+    "title": "List Salesforce Fields",
+    "cost": ""
+  },
+  {
+    "name": "salesforceDatasetSources_listViews",
+    "title": "List Salesforce List Views",
+    "cost": ""
+  },
+  {
+    "name": "attioDatasetSources_create",
+    "title": "Import from Attio",
+    "cost": "freeStart"
+  },
+  {
+    "name": "attioDatasetSources_get",
+    "title": "Get Attio Source",
+    "cost": ""
+  },
+  {
+    "name": "attioDatasetSources_sync",
+    "title": "Sync Attio Source",
+    "cost": "spend"
+  },
+  {
+    "name": "attioDatasetSources_setSchedule",
+    "title": "Set Attio Import Schedule",
+    "cost": "later"
+  },
+  {
+    "name": "attioDatasetSources_deleteSchedule",
+    "title": "Delete Attio Import Schedule",
+    "cost": "free"
+  },
+  {
+    "name": "attioDatasetSources_objects",
+    "title": "List Attio Objects",
+    "cost": ""
+  },
+  {
+    "name": "attioDatasetSources_attributes",
+    "title": "List Attio Attributes",
+    "cost": ""
+  },
+  {
+    "name": "snowflakeDatasetSources_previewQuery",
+    "title": "Preview Snowflake Query",
+    "cost": ""
+  },
+  {
+    "name": "snowflakeDatasetSources_createImport",
+    "title": "Import from Snowflake",
+    "cost": "spend"
+  },
+  {
+    "name": "signals_listSignalTypes",
+    "title": "List Signal Types",
+    "cost": ""
+  },
+  {
+    "name": "signals_createSignalProviderConfiguration",
+    "title": "Create Signal",
+    "cost": "spend"
+  },
+  {
+    "name": "signals_listSignalProviderConfigurationMonitorStatuses",
+    "title": "List Signal Monitor Statuses",
+    "cost": ""
+  },
+  {
+    "name": "signals_listSignalProviderConfigurations",
+    "title": "List Dataset Signals",
+    "cost": ""
+  },
+  {
+    "name": "signals_listActiveSignalProviderConfigurations",
+    "title": "List Active Signals",
+    "cost": ""
+  },
+  {
+    "name": "signals_getSignalProviderConfiguration",
+    "title": "Get Signal",
+    "cost": ""
+  },
+  {
+    "name": "signals_pauseSignalProviderConfiguration",
+    "title": "Pause Signal",
+    "cost": "free"
+  },
+  {
+    "name": "signals_reactivateSignalProviderConfiguration",
+    "title": "Reactivate Signal",
+    "cost": "spend"
+  },
+  {
+    "name": "signals_retrySignalProviderConfiguration",
+    "title": "Retry Signal Monitors",
+    "cost": "spend"
+  },
+  {
+    "name": "signals_deleteSignalProviderConfiguration",
+    "title": "Delete Signal",
+    "cost": "free"
+  },
+  {
+    "name": "signals_listByWorkbook",
+    "title": "List Workbook Signals",
+    "cost": ""
+  },
+  {
+    "name": "adAudienceSyncs_createAdAudienceSync",
+    "title": "Create Ad Audience Sync",
+    "cost": "freeStart"
+  },
+  {
+    "name": "adAudienceSyncs_listAdAudienceSyncs",
+    "title": "List Ad Audience Syncs",
+    "cost": ""
+  },
+  {
+    "name": "adAudienceSyncs_getAdAudienceSync",
+    "title": "Get Ad Audience Sync",
+    "cost": ""
+  },
+  {
+    "name": "adAudienceSyncs_updateAdAudienceSync",
+    "title": "Update Ad Audience Sync",
+    "cost": "free"
+  },
+  {
+    "name": "adAudienceSyncs_runAdAudienceSync",
+    "title": "Run Ad Audience Sync",
+    "cost": "freeStart"
+  },
+  {
+    "name": "adAudienceSyncs_deleteAdAudienceSync",
+    "title": "Delete Ad Audience Sync",
+    "cost": "free"
+  },
+  {
+    "name": "creditUsage_getCurrentCredits",
+    "title": "Get Credit Balance",
+    "cost": ""
+  },
+  {
+    "name": "creditUsage_getUsageByDay",
+    "title": "Get Credit Usage by Day",
+    "cost": ""
+  },
+  {
+    "name": "creditUsage_getUsageByWorkbook",
+    "title": "Get Credit Usage by Workbook",
+    "cost": ""
+  },
+  {
+    "name": "creditUsage_getUsageByWorkflow",
+    "title": "Get Credit Usage by Workflow",
+    "cost": ""
+  },
+  {
+    "name": "creditUsage_getUsageByNodeInWorkbook",
+    "title": "Get Workbook Credit Usage by Node",
+    "cost": ""
+  },
+  {
+    "name": "creditUsage_getUsageByNodeInWorkflow",
+    "title": "Get Workflow Credit Usage by Node",
+    "cost": ""
+  },
+  {
+    "name": "integrationCredentials_list",
+    "title": "List Connections",
+    "cost": ""
+  },
+  {
+    "name": "integrationCredentials_delete",
+    "title": "Delete Connection",
+    "cost": "free"
+  },
+  {
+    "name": "connections_setup",
+    "title": "Set Up Connection",
+    "cost": ""
+  },
+  {
+    "name": "workspace_context",
+    "title": "Get Workspace Context",
+    "cost": ""
+  },
+  {
+    "name": "workspace_select",
+    "title": "Switch Workspace",
+    "cost": "free"
+  },
+  {
+    "name": "workspace_updateWorkspaceTimeZone",
+    "title": "Set Workspace Time Zone",
+    "cost": "free"
+  },
+  {
+    "name": "snapshot_createUpload",
+    "title": "Share Session Transcript With Freckle",
+    "cost": "free"
+  }
+]
