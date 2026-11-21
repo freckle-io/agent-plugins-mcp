@@ -117,7 +117,7 @@ def problems(name, mode, data):
                 for entry in obj.get("plugins", []):
                     source = entry.get("source")
                     external = isinstance(source, dict) and source.get("source") in {"github", "git", "url"}
-                    this_plugin = entry.get("name") == "freckle-mcp" and isinstance(source, str) and source in {".", "./", "./" + PLUGIN}
+                    this_plugin = entry.get("name") == "freckle" and isinstance(source, str) and source in {".", "./", "./" + PLUGIN}
                     if not external and not this_plugin:
                         errors.append("marketplace may list only external repos or this plugin")
             elif path.name in {"hooks.json", ".lsp.json", "monitors.json", "package.json"}:

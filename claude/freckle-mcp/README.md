@@ -7,7 +7,7 @@ monitor Signals and sync Ads audiences through Freckle's hosted MCP server.
 
 ```text
 /plugin marketplace add freckle-io/agent-plugins-mcp
-/plugin install freckle-mcp@freckle-mcp-plugins
+/plugin install freckle@freckle-mcp-plugins
 ```
 
 Run `/mcp`, select **freckle**, sign in to Freckle and choose your Workspace.

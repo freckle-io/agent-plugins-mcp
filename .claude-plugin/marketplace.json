@@ -8,7 +8,7 @@
   },
   "plugins": [
     {
-      "name": "freckle-mcp",
+      "name": "freckle",
       "source": "./claude/freckle-mcp",
       "description": "Freckle through MCP: lists, enrichment, workflows, CRM imports, Signals and Ads audiences. No Freckle CLI required."
     }
