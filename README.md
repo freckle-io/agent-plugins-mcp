@@ -28,7 +28,7 @@ Install the plugin. It connects the MCP server and adds the skills in one step:
 
 ```
 /plugin marketplace add freckle-io/agent-plugins-mcp
-/plugin install freckle-mcp@freckle-mcp-plugins
+/plugin install freckle@freckle-mcp-plugins
 ```
 
 Then run `/mcp`, pick **freckle**, sign in to Freckle in the browser and choose
