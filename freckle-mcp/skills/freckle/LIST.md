@@ -10,4 +10,5 @@
 
 ## CRM imports
 - `hubspotDatasetSources_create` or `salesforceDatasetSources_create`. In the first question round, unless the ask settles them, ask both: a list, all records or a filter; and, as its own question, whether a list should be mirrored (members who leave the list leave the Dataset) or only add and update, recommending mirror when the Dataset should match the list.
+- `attioDatasetSources_create` imports the records of one Attio object, optionally narrowed by an Attio filter; it has no list or mirror. `attioDatasetSources_sync` adds the records created in Attio since the last import. A `schedule` on create, or `attioDatasetSources_setSchedule`, does the same at most every 10 minutes. Neither updates or removes existing entries.
 - Downstream work waits for the import to complete; report a failed or partial import and ask before processing it.
